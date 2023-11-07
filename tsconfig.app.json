@@ -1,12 +1,43 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
-  "exclude": ["src/**/__tests__/*"],
-  "compilerOptions": {
-    "composite": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
-  }
+	"extends": "@vue/tsconfig/tsconfig.dom.json",
+	"include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+	"exclude": ["node_modules", "test", "dist", "**/*spec.ts"],
+	"references": [{ "path": "./tsconfig.node.json" }],
+	"compilerOptions": {
+		"lib": [
+			"ESNext",
+			"es2022",
+			"es2020",
+			"dom",
+			"esnext"
+		],
+		"module": "esnext",
+		"declaration": true,
+		"removeComments": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowSyntheticDefaultImports": true,
+		"target": "es2017",
+		"sourceMap": true,
+		"jsx": "preserve",
+		"outDir": "./dist",
+		"noEmit": true,
+		"baseUrl": "./",
+		"incremental": true,
+		"skipLibCheck": false,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"strictNullChecks": false,
+		"composite": true,
+		"noImplicitAny": false,
+		"strictBindCallApply": false,
+		"forceConsistentCasingInFileNames": false,
+		"noFallthroughCasesInSwitch": false,
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"typeRoots": ["./node_modules/@types", "./types"],
+		"paths": {
+			"@/*": ["./src/*"],
+		}
+	},
 }

@@ -2,6 +2,8 @@
 
 	import SignupForm from "../components/SignupForm.vue";
 
+  
+  
 </script>
 
 <template>

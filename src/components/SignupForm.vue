@@ -1,20 +1,35 @@
 <script setup>
-    import { ref }  from 'vue';
-    import axios from 'axios'
+  import { ref }  from 'vue';
+  import axios from 'axios'
+  import { toast } from 'vue3-toastify';
+  import 'vue3-toastify/dist/index.css';
+  let pseudoSignup = ""
+  let emailSignup = ""
+  let passwordSignup = ""
 
-    let pseudoSignup = ""
-    let emailSignup = ""
-    let passwordSignup = ""
 
-    function signup() {
-        axios.post('http://localhost:9005/auth/signup',{
-            email: emailSignup,
-            password: passwordSignup,
-            username: pseudoSignup
-        }).catch(error=>{
-            console.log(error.response.data.message)
-        });
-    }
+  const notify = () => {
+    toast("Welcome " + pseudoSignup, {
+      autoClose: 2000,
+    });
+  }
+
+  const showErrorToast = (message) => {
+  toast.error(message, {
+    autoClose: 3000, 
+  });
+  }
+
+  function signup() {
+      axios.post('http://localhost:9005/auth/signup',{
+          email: emailSignup,
+          password: passwordSignup,
+          username: pseudoSignup
+      }).catch(error=>{
+          console.log(error.response.data.message)
+          showErrorToast(error.response.data.message[0])
+      });
+  }
     
 </script>
 

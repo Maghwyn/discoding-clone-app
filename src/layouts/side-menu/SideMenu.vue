@@ -149,7 +149,7 @@ const setActive = (id: string) => {
 			:updated="true"
 			:round="true"
 			:key="`direct_msg_${index}`"
-			@click="setActive('2')"
+			@click="setActive(channel.id)"
 		/>
 
 		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8"/>

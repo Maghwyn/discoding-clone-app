@@ -1,14 +1,22 @@
-import './assets/main.css'
+import '@/styles/scss/packet.scss';
+import '@/styles/tailwindcss.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from 'vue';
 
-import App from './App.vue'
-import router from './router'
+import App from '@/App.vue';
+import pinia from '@/stores';
+import router from '@/router';
 
-const app = createApp(App)
+import { withErrorHandler } from '@/utils/withErrorHandler';
 
-app.use(createPinia())
-app.use(router)
+withErrorHandler(async function () {
+	return bootVueApp();
+})();
 
-app.mount('#app')
+function bootVueApp() {
+	const app = createApp(App);
+
+	app.use(router);
+	app.use(pinia);
+	app.mount('#app');
+}

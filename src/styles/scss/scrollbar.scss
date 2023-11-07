@@ -1,0 +1,48 @@
+* {
+	scrollbar-width: auto;
+	scrollbar-color: rgb($color-background) rgb($color-midground);
+}
+
+*::-webkit-scrollbar {
+	width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+	background: rgb($color-midground);
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: rgb($color-background);
+	border-radius: 6px;
+	border: none;
+}
+
+/*
+Hide scrollbar but keep scroll
+*/
+.hidden-scrollbar {
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+  
+/*
+Scrollbar that is only visible on hover
+*/
+.hover-scrollbar {
+	&::-webkit-scrollbar {
+		width: 6px;
+	}
+
+	&:not(:hover) {
+		scrollbar-width: 0;
+		&::-webkit-scrollbar-thumb {
+			background-color: transparent;
+		}
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+	}
+}

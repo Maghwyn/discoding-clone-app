@@ -6,7 +6,7 @@ const routes: Array<RouteRecordRaw> = [
 		 * This path contains every pages that aren't locked behind the signin.
 		 */
 		path: '/',
-		component: () => import('../views/HomeView.vue'),
+		// component: () => import('../views/HomeView.vue'),
 		children: [
 			{
 				path: 'signin',
@@ -26,26 +26,26 @@ const routes: Array<RouteRecordRaw> = [
 		 * This path contains every pages that are locked behind the signin and not accesible by the public.
 		 */
 		path: '/app',
-		component: () => import('../layout/app/AppLayout.vue'),
+		// component: () => import('../layout/app/AppLayout.vue'),
 		children: [
 			{
 				path: 'server/:id',
-				component: () => import('../views/app/Server.vue'),
+				component: () => import('../views/Server.vue'),
 			},
 			{
 				path: 'conversation/:id',
-				component: () => import('../views/app/Server.vue'),
+				component: () => import('../views/Conversation.vue'),
 			},
 			{
 				path: 'relashionship',
 				children: [
 					{
 						path: 'friends',
-						component: () => import('../views/app/Relationship.vue'),
+						component: () => import('../views/Relationship.vue'),
 					},
 					{
 						path: 'blocked',
-						component: () => import('../views/app/Relationship.vue'),
+						component: () => import('../views/Relationship.vue'),
 					}
 				]
 			},

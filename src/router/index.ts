@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
 
 const routes: Array<RouteRecordRaw> = [
 	{
@@ -10,11 +10,11 @@ const routes: Array<RouteRecordRaw> = [
 		children: [
 			{
 				path: 'signin',
-				component: () => import('../views/Signin.vue'),
+				component: () => import('../views/auth/Signin.vue'),
 			},
 			{
 				path: 'signup',
-				component: () => import('../views/Signup.vue'),
+				component: () => import('../views/auth/Signup.vue'),
 			},
 		],
 		meta: { 
@@ -26,26 +26,26 @@ const routes: Array<RouteRecordRaw> = [
 		 * This path contains every pages that are locked behind the signin and not accesible by the public.
 		 */
 		path: '/app',
-		// component: () => import('../layout/app/AppLayout.vue'),
+		component: () => import('../layouts/AppLayout.vue'),
 		children: [
 			{
-				path: 'server/:id',
-				component: () => import('../views/Server.vue'),
+				path: 'servers/:serverId/:channelId',
+				component: () => import('../views/app/Server.vue'),
 			},
 			{
-				path: 'conversation/:id',
-				component: () => import('../views/Conversation.vue'),
+				path: 'servers-discovery',
+				component: () => import('../views/app/ServerDiscovery.vue'),
 			},
 			{
-				path: 'relashionship',
+				path: 'channels',
 				children: [
 					{
-						path: 'friends',
-						component: () => import('../views/Relationship.vue'),
+						path: 'me',
+						component: () => import('../views/app/Relationship.vue'),
 					},
 					{
-						path: 'blocked',
-						component: () => import('../views/Relationship.vue'),
+						path: ':id',
+						component: () => import('../views/app/Conversation.vue'),
 					}
 				]
 			},
@@ -57,7 +57,7 @@ const routes: Array<RouteRecordRaw> = [
 	//Always leave it as last one.
 	{
 		path: '/:catchAll(.*)*',
-		component: () => import('../views/404.vue'),
+		component: () => import('../views/NotFound.vue'),
 	},
 ];
 

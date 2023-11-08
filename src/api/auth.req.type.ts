@@ -15,6 +15,4 @@ export type PasswordChangePayload = ActionToken & UserPassword;
 
 export type SignupPayload = Credentials & {
 	username: string;
-	firstname: string;
-	lastname: string;
 }

@@ -6,6 +6,8 @@ import { createApp } from 'vue';
 import App from '@/App.vue';
 import pinia from '@/stores';
 import router from '@/router';
+import * as ConfirmDialog from 'vuejs-confirm-dialog'
+
 
 import { withErrorHandler } from '@/utils/withErrorHandler';
 
@@ -18,5 +20,6 @@ function bootVueApp() {
 
 	app.use(router);
 	app.use(pinia);
+	app.use(ConfirmDialog);
 	app.mount('#app');
 }

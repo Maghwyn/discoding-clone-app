@@ -1,24 +1,28 @@
-<script setup>
+<script setup lang="ts">
   import axios from 'axios'
   import 'vue3-toastify/dist/index.css';
   import { useRouter } from 'vue-router';
   import { useToastStore } from '@/stores/toast.store';
+  import  '@/api/auth.req'
+  import {ref} from "vue";
+  import {signupUser} from "@/api/auth.req";
 
   const router = useRouter();
   const toastStore = useToastStore();
 
-  let pseudoSignup = ""
-  let emailSignup = ""
-  let passwordSignup = ""
+  let pseudoSignup = ref("")
+  let emailSignup = ref("")
+  let passwordSignup = ref("")
 
-  function signup() {    
-    axios.post('http://localhost:9005/auth/signup',{
-        email: emailSignup,
-        password: passwordSignup,
-        username: pseudoSignup
-    }).then(res => {
+  function signup() {
+    let payloadNewUser = {
+      email: emailSignup.value,
+      password: passwordSignup.value,
+      username: pseudoSignup.value
+    }
+    signupUser(payloadNewUser).then(res => {
       toastStore.validationFromSignup = true
-      toastStore.messageContent = "Welcome " + pseudoSignup
+      toastStore.messageContent = "Welcome " + pseudoSignup.value
       router.push({path: '/signin'})
     }).catch(error=>{
       toastStore.showErrorToast(error.response.data.message[0])

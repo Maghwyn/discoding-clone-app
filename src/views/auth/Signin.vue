@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { useToastStore } from '@/stores/toast.store';
 	const alert = useToastStore();
   if (alert.validationFromSignup) {

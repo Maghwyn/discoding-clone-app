@@ -16,8 +16,3 @@
 .glassmorphism {
 	@include custom-glassmorphism(3px, #442328);
 }
-
-.custom-background {
-	background-image: url("/coding-theme.svg");
-	@include custom-bg-pos(center center);
-}

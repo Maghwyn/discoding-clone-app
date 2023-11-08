@@ -6,7 +6,7 @@ import ServerCardItem from '@/components/discovery/ServerCardItem.vue';
 
 <template>
 	<SideDiscovery/>
-	<div class="flex flex-grow flex-col h-full relative">
+	<div class="flex grow flex-col h-full relative">
 		<div class="flex grow h-full flex-col justify-start items-center p-8 gap-12 overflow-scroll">
 			<DiscoveryHeader/>
 			<div class="discovery-grid w-full gap-3">

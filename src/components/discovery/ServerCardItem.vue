@@ -7,7 +7,7 @@ defineProps<{
 </script>
 
 <template>
-	<div class="flex flex-col overflow-hidden cursor-pointer h-[270px] flex-grow rounded-lg">
+	<div class="flex flex-col overflow-hidden cursor-pointer h-[270px] grow rounded-lg">
 		<div class="w-full h-[45%] object-fit">
 			<img class="w-full h-full object-cover" :src="image">
 		</div>

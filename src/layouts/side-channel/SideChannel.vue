@@ -32,7 +32,7 @@ const textChannels = computed(() => channelsList.value.filter((c) => c.type === 
 const audioChannels = computed(() => channelsList.value.filter((c) => c.type === 'audio'));
 
 const serverId = ref("1");
-const defaultChannelName = ref("Welcome");
+const defaultChannelName = ref("welcome");
 const defaultChannelId = ref("1");
 const defaultChannelNotificationCount = ref(0);
 

@@ -78,10 +78,11 @@ const isFollowup = (index: number) => {
 
 <template>
 	<SideConversation/>
-	<div class="flex flex-grow flex-col h-full relative">
+	<div class="flex grow flex-col h-full relative">
 		<ChannelHeader
 			user-picture="https://picsum.photos/200?random=2"
-			username="Ronald"
+			channelName="Ronald"
+			type="conversation"
 		/>
 		<div class="relative flex flex-1 flex-col flex-col-reverse min-h-0 min-w-0 z-0 overflow-scroll">
 			<div class="flex flex-col pb-[1.5rem]">

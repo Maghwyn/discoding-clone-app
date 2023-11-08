@@ -20,10 +20,10 @@ const onInput = () => {
 							<IconRoundPlus/>
 						</div>
 					</div>
-					<div class="flex flex-grow pt-[13px] pb-[12px]">
+					<div class="flex grow pt-[13px] pb-[12px]">
 						<textarea
 							id="send-message"
-							class="bg-transparent select-none border-none outline-none resize-none w-full flex-grow text-xs max-h-[45vh] block h-4 text-white"
+							class="bg-transparent select-none border-none outline-none resize-none w-full grow text-xs max-h-[45vh] block h-4 text-white"
 							placeholder="Message #RandomGuy"
 							ref="inputArea"
 							@input="onInput"

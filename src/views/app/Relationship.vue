@@ -4,7 +4,7 @@ import SideConversation from '@/layouts/side-conversation/SideConversation.vue';
 
 <template>
 	<SideConversation/>
-	<div class="flex flex-grow flex-col h-full relative">
+	<div class="flex grow flex-col h-full relative">
 
 	</div>
 </template>

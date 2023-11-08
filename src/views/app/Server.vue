@@ -4,6 +4,7 @@ import Message from '@/components/channel/Message.vue';
 import ChannelHeader from '@/components/channel/ChannelHeader.vue';
 import MessageOrigin from '@/components/channel/MessageOrigin.vue';
 import MessageInput from '@/components/channel/MessageInput.vue';
+import SideChannel from '@/layouts/side-channel/SideChannel.vue';
 
 const userId = ref("100");
 
@@ -76,6 +77,7 @@ const isFollowup = (index: number) => {
 </script>
 
 <template>
+	<SideChannel/>
 	<div class="flex flex-grow flex-col h-full relative">
 		<ChannelHeader
 			user-picture="https://picsum.photos/200?random=2"

@@ -38,7 +38,7 @@ watch(active, v => {
 </script>
 
 <template>
-	<div class="flex flex-col w-[240px] overflow-hidden">
+	<div class="flex flex-col w-[240px] min-w-[240px] overflow-hidden">
 		<div class="bottom-70 flex flex-col z-10">
 			<div class="px-2 flex h-12 items-center bg-midground search-header-shadow">
 				<button class="flex w-full justify-between rounded-sm bg-background p-1.5 text-left text-xs text-[#949ba4] hover:bg-background/70">

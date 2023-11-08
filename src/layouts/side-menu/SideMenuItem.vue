@@ -1,19 +1,21 @@
 <script lang="ts" setup>
 import Popper from '@/components/ui/Popper.vue';
 import NotificationBadge from '@/components/ui/NotificationBadge.vue';
-import IconDiscord from '@/components/icons/IconDiscord.vue';
+import { RouterLink } from 'vue-router';
 
 const props = defineProps<{
 	notificationCount: number;
 	iconStyling: string;
 	updated?: boolean;
 	round: boolean;
-	goto: string;
+	goto?: string;
 	image?: string;
 	tooltipContent: string;
 	isActive: boolean;
 	identifier: string;
 }>();
+
+
 
 const roundClass = props.round 
 	? "rounded-[50%] group-hover:rounded-[15px]"
@@ -22,8 +24,8 @@ const roundClass = props.round
 
 <template>
 	<Popper class="mx-auto" :content="tooltipContent" :identifier="identifier">
-		<router-link
-			class="group relative block h-12 w-12 bg-foreground bg-cover transition-all hover:shadow-xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-[1px]"
+		<component :is="goto ? RouterLink : 'div'"
+			class="group cursor-pointer relative block h-12 w-12 bg-foreground bg-cover transition-all hover:shadow-xl focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background active:translate-y-[1px]"
 			:class="roundClass + ' ' + iconStyling"
 			:to="goto"
 			:id="`rx:${identifier}`"
@@ -43,7 +45,7 @@ const roundClass = props.round
 				class="absolute inset-0 transition-all z-0"
 				:class="roundClass"
 			/>
-			<IconDiscord v-else width="1em" height="1em"/>
-		</router-link>
+			<slot v-else name="icon"/>
+		</component>
 	</Popper>
 </template>

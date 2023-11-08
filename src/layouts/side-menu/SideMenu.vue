@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import SideMenuItem from '@/layouts/side-menu/SideMenuItem.vue';
+import IconDiscovery from '@/components/icons/IconDiscovery.vue';
+import IconDiscord from '@/components/icons/IconDiscord.vue';
+import IconPlus from '@/components/icons/IconPlus.vue';
 
 // TODO: Retrieve all the directMessage not seen from the conversations store
 // TODO: The type will be DirectMessage
@@ -122,7 +125,7 @@ const setActive = (id: string) => {
 
 <template>
 	<nav class="hidden-scrollbar fixed z-50 h-screen w-[70px] gap-3 overflow-y-auto pt-3 pb-2 bg-gradient-to-b from-semibackground to-background">
-		<div className="pointer-events-none fixed bottom-0 z-10 h-32 w-[70px] bg-gradient-to-b from-transparent to-black/20"></div>
+		<div class="pointer-events-none fixed bottom-0 z-10 h-32 w-[70px] bg-gradient-to-b from-transparent to-black/20"></div>
 
 		<SideMenuItem
 			:iconStyling="`mx-auto mb-2 flex items-center justify-center bg-foreground ${active === 'default' ? 'bg-primary text-white' : 'text-gray-300'}`"
@@ -134,7 +137,11 @@ const setActive = (id: string) => {
 			:updated="false"
 			:round="false"
 			@click="setActive('default')"
-		/>
+		>
+			<template v-slot:icon>
+				<IconDiscord width="1em" height="1em"/>
+			</template>
+		</SideMenuItem>
 
 		<SideMenuItem
 			v-for="(channel, index) in directMessages"
@@ -167,5 +174,41 @@ const setActive = (id: string) => {
 			:key="`direct_msg_${index}`"
 			@click="setActive(server.id)"
 		/>
+
+		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-2"/>
+
+		<SideMenuItem
+			iconStyling="mx-auto mb-2 flex items-center justify-center bg-foreground"
+			:notificationCount="0"
+			goto="/app/servers-discovery"
+			identifier="discovery"
+			tooltipContent="Servers discovery"
+			:isActive="active === 'discovery'"
+			:updated="false"
+			:round="true"
+			@click="setActive('discovery')"
+		>
+			<template v-slot:icon>
+				<div class="w-full h-full flex justify-center items-center rounded-[50%] text-green-500">
+					<IconDiscovery width="28" height="28"/>
+				</div>
+			</template>
+		</SideMenuItem>
+
+		<SideMenuItem
+			iconStyling="mx-auto mb-2 flex items-center justify-center bg-foreground"
+			:notificationCount="0"
+			identifier="server"
+			tooltipContent="Create server"
+			:isActive="false"
+			:updated="false"
+			:round="true"
+		>
+			<template v-slot:icon>
+				<div class="w-full h-full flex justify-center items-center rounded-[50%] text-green-500">
+					<IconPlus width="28" height="28"/>
+				</div>
+			</template>
+		</SideMenuItem>
 	</nav>
 </template>

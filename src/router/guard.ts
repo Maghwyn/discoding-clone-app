@@ -10,7 +10,7 @@ router.beforeEach(async (to, from, next) => {
 		// If the flag is set to true and one of the meta is present
 		if (isAuth && (to.meta.requiresAuth || to.meta.forbiddenAfterAuth)) {
 			// We check for the validity of the auth token
-			console.log(await http.post('/auth'))
+			await http.post('/auth')
 
 			// We verify if the route require auth.
 			if (to.meta.requiresAuth) return next();

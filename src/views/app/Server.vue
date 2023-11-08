@@ -5,6 +5,7 @@ import ChannelHeader from '@/components/channel/ChannelHeader.vue';
 import MessageOrigin from '@/components/channel/MessageOrigin.vue';
 import MessageInput from '@/components/channel/MessageInput.vue';
 import SideChannel from '@/layouts/side-channel/SideChannel.vue';
+import SideMember from '@/layouts/side-member/SideMember.vue';
 
 const userId = ref("100");
 
@@ -74,30 +75,43 @@ const isFollowup = (index: number) => {
 	}
 	return false;
 }
+
+const currentChannelName = ref("welcome");
+
+const isSidebarOpen = ref(false);
+const actionSidebar = (b: boolean) => {
+	isSidebarOpen.value = b;
+}
 </script>
 
 <template>
 	<SideChannel/>
-	<div class="flex flex-grow flex-col h-full relative">
+	<div class="flex grow flex-col h-full relative">
 		<ChannelHeader
-			user-picture="https://picsum.photos/200?random=2"
-			username="Ronald"
+			:channelName="currentChannelName"
+			type="server"
+			@sidebar="actionSidebar(!isSidebarOpen)"
 		/>
-		<div class="relative flex flex-1 flex-col flex-col-reverse min-h-0 min-w-0 z-0 overflow-scroll">
-			<div class="flex flex-col pb-[1.5rem]">
-				<Message
-					v-for="(message, index) in messages"
-					:user-picture="message.userPicture"
-					:username="message.username"
-					:content="message.content"
-					:can-edit="userId === message.userId"
-					:is-followup="isFollowup(index)"
-					:created-at="message.createdAt"
-					:key="`msg_channel_${index}`"
-				/>
+		<div class="relative flex flex-1 min-h-0 min-w-0 z-0">
+			<div class="flex grow flex-col flex-1 relative">
+				<div class="relative flex flex-1 flex-col flex-col-reverse min-h-0 min-w-0 z-0 overflow-scroll">
+					<div class="flex flex-col pb-[1.5rem]">
+						<Message
+							v-for="(message, index) in messages"
+							:user-picture="message.userPicture"
+							:username="message.username"
+							:content="message.content"
+							:can-edit="userId === message.userId"
+							:is-followup="isFollowup(index)"
+							:created-at="message.createdAt"
+							:key="`msg_channel_${index}`"
+						/>
+					</div>
+					<MessageOrigin/>
+				</div>
+				<MessageInput/>
 			</div>
-			<MessageOrigin/>
+			<SideMember class="transition-all" :class="{ '!w-[0px] !min-w-[0px]': !isSidebarOpen, '': isSidebarOpen }"/>
 		</div>
-		<MessageInput/>
 	</div>
 </template>

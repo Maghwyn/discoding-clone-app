@@ -3,9 +3,8 @@ import SideMenu from '@/layouts/side-menu/SideMenu.vue';
 </script>
 
 <template>
-	<!-- <Suspense> -->
-		<SideMenu />
-		<slot/>
-	<!-- </Suspense> -->
-	<!-- <SearchModal /> -->
+	<SideMenu />
+	<div id="content" class="ml-[70px]">
+		<router-view />
+	</div>
 </template>

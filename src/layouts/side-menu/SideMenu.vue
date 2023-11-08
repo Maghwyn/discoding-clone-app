@@ -120,9 +120,8 @@ const setActive = (id: string) => {
 }
 </script>
 
-
 <template>
-	<div class="hidden-scrollbar fixed z-50 h-screen w-[70px] gap-3 overflow-y-auto pt-3 bg-gradient-to-b from-semibackground to-background">
+	<nav class="hidden-scrollbar fixed z-50 h-screen w-[70px] gap-3 overflow-y-auto pt-3 pb-2 bg-gradient-to-b from-semibackground to-background">
 		<div className="pointer-events-none fixed bottom-0 z-10 h-32 w-[70px] bg-gradient-to-b from-transparent to-black/20"></div>
 
 		<SideMenuItem
@@ -139,7 +138,7 @@ const setActive = (id: string) => {
 
 		<SideMenuItem
 			v-for="(channel, index) in directMessages"
-			:iconStyling="`mx-auto my-2 flex items-center justify-center`"
+			:iconStyling="`mx-auto my-1 flex items-center justify-center`"
 			:notificationCount="channel.notificationCount"
 			:goto="`/app/channels/${channel.id}`"
 			:image="`${channel.userPicture}`"
@@ -152,11 +151,11 @@ const setActive = (id: string) => {
 			@click="setActive(channel.id)"
 		/>
 
-		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8"/>
+		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-1"/>
 
 		<SideMenuItem
 			v-for="(server, index) in servers"
-			:iconStyling="`mx-auto my-2 flex items-center justify-center`"
+			:iconStyling="`mx-auto my-1 flex items-center justify-center`"
 			:notificationCount="server.notificationCount"
 			:goto="`/app/servers/${server.id}/${server.lastChannelId}`"
 			:image="`${server.iconUrl}`"
@@ -168,5 +167,5 @@ const setActive = (id: string) => {
 			:key="`direct_msg_${index}`"
 			@click="setActive(server.id)"
 		/>
-	</div>
+	</nav>
 </template>

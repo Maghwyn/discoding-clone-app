@@ -1,3 +1,6 @@
+<script lang="ts" setup>
+</script>
+
 <template>
-	Server
+
 </template>

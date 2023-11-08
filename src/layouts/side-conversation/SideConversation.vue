@@ -25,6 +25,8 @@ const conversations = ref([
 	},
 ]);
 
+const relationshipNotificationCount = ref(3);
+
 const active = ref('default');
 const setActive = (id: string) => {
 	console.log("before", active.value)
@@ -38,7 +40,7 @@ watch(active, v => {
 </script>
 
 <template>
-	<div class="flex flex-col w-[240px] overflow-hidden">
+	<div class="flex flex-col w-[240px] min-w-[240px] overflow-hidden">
 		<div class="bottom-70 flex flex-col z-10">
 			<div class="px-2 flex h-12 items-center bg-midground search-header-shadow">
 				<button class="flex w-full justify-between rounded-sm bg-background p-1.5 text-left text-xs text-[#949ba4] hover:bg-background/70">
@@ -57,9 +59,9 @@ watch(active, v => {
 					<template v-slot:icon>
 						<IconFriend/>
 					</template>
-					<template v-slot:badge>
+					<template v-if="relationshipNotificationCount > 0" v-slot:badge>
 						<div class="flex justify-center items-center rounded-[50%] text-[11px] font-bold leading-4 mr-2 uppercase tracking-wide h-4 w-4 min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] text-center flex-auto text-white bg-red-500">
-							3
+							{{ relationshipNotificationCount }}
 						</div>
 					</template>
 				</SideConversationItem>
@@ -74,7 +76,7 @@ watch(active, v => {
 
 			<ul class="flex flex-col gap-0.5">
 				<SideConversationItem
-					v-for="(conv, index) in conversations"
+					v-for="conv in conversations"
 					:goto="`/app/channels/${conv.id}`"
 					:name="conv.username"
 					:image="conv.userPicture"

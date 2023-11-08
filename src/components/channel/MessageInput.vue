@@ -20,10 +20,10 @@ const onInput = () => {
 							<IconRoundPlus/>
 						</div>
 					</div>
-					<div class="flex flex-grow pt-[13px] pb-[12px]">
+					<div class="flex grow pt-[13px] pb-[12px]">
 						<textarea
 							id="send-message"
-							class="bg-transparent select-none border-none outline-none resize-none w-full flex-grow text-xs max-h-[45vh] block h-4 text-white"
+							class="bg-transparent select-none border-none outline-none resize-none w-full grow text-xs max-h-[45vh] block h-4 text-white"
 							placeholder="Message #RandomGuy"
 							ref="inputArea"
 							@input="onInput"
@@ -39,54 +39,3 @@ const onInput = () => {
 		</div>
 	</div>
 </template>
-
-<style>
-.discoding-icon, .discoding-user-icon {
-    width: 32px;
-    height: 32px;
-    min-height: 32px;
-    min-width: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.discoding-editable-area-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-height: 50vh;
-    min-height: 3rem;
-    bottom: 0;
-    padding-bottom: 1.25rem;
-    background-color: #313338;
-}
-
-.discoding-editable-area {
-    width: 98%;
-    min-height: 2.75rem;
-    padding: 0 5rem 0 .5rem;
-    background-color: rgb(56,58,64);
-    display: flex;
-    gap: .5rem;
-    align-items: center;
-}
-
-.discoding-editable-area-input {
-    background-color: transparent;
-    user-focus: none;
-    border: none;
-    outline: none;
-    resize: none;
-    width: 100%;
-    height: 24px;
-    flex-grow: 1;
-    font-size: 13px;
-    max-height: 45vh;
-}
-
-.discoding-editable-area-input::placeholder {
-    opacity: .5;
-}
-</style>

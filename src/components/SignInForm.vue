@@ -1,81 +1,76 @@
 <script setup lang="ts">
-  import axios from 'axios'
-  import 'vue3-toastify/dist/index.css';
-  import { useRouter } from 'vue-router';
-  import { useToastStore } from '@/stores/toast.store';
-  import  '@/api/auth.req'
-  import {ref} from "vue";
-  import {signupUser} from "@/api/auth.req";
+import 'vue3-toastify/dist/index.css';
+import { useRouter } from 'vue-router';
+import { useToastStore } from '@/stores/toast.store';
+import  '@/api/auth.req'
+import {ref} from "vue";
+import {signinUser} from "@/api/auth.req";
 
-  const router = useRouter();
-  const toastStore = useToastStore();
+const router = useRouter();
+const toastStore = useToastStore();
 
-  let pseudoSignup = ref("")
-  let emailSignup = ref("")
-  let passwordSignup = ref("")
+let emailSignin = ref("")
+let passwordSignin = ref("")
 
-  function signup() {
-    let payloadNewUser = {
-      email: emailSignup.value,
-      password: passwordSignup.value,
-      username: pseudoSignup.value
-    }
-    signupUser(payloadNewUser).then(res => {
-      toastStore.validationFromSignup = true
-      toastStore.messageContent = "Welcome " + pseudoSignup.value
-      router.push({path: '/signin'})
-    }).catch(error=>{
-      toastStore.showErrorToast(error.response.data.message[0])
-    });
+
+function signin() {
+  let payloadNewUser = {
+    email: emailSignin.value,
+    password: passwordSignin.value
   }
-    
+  signinUser(payloadNewUser).then(res => {
+    router.push({path: '/app/channels/me'})
+  }).catch(error=>{
+    if (error.response.data.message == "Unauthorized" ) {
+      toastStore.showErrorToast("Wrong credentials")
+    } else {
+      console.log(error)
+    }
+  });
+}
+
 </script>
 
 
 <template>
-    <canvas id="svgBlob"></canvas>
-    <div class="position">
+  <canvas id="svgBlob"></canvas>
+  <div class="position">
     <form class="container">
-        <div class="centering-wrapper">
-          <div class="section1 text-center">
-            <div class="primary-header">Welcome aboard !</div>
-            <div class="secondary-header">We're so excited to see you !</div>
-            <div class="input-position">
+      <div class="centering-wrapper">
+        <div class="section1 text-center">
+          <div class="primary-header">Welcome back !</div>
+          <div class="secondary-header">We're so excited to see you again!</div>
+          <div class="input-position">
             <div class="form-group">
-                <h5 class="input-placeholder" id="pseudo-txt">Pseudo<span class="error-message" id="pseudo-error"></span></h5>
-                <input type="pseudo" v-model="pseudoSignup" required="true" name="signupLogo" class="form-style" id="signupLogoId" autocomplete="off" style="margin-bottom: 20px;">
-                <i class="input-icon uil uil-at"></i>
-            </div>		
-            <div class="form-group">
-                <h5 class="input-placeholder" id="email-txt">Email<span class="error-message" id="email-error"></span></h5>
-                <input type="email" v-model="emailSignup" required="true" name="signupEmail" class="form-style" id="signupEmail" autocomplete="off" style="margin-bottom: 20px;">
-                <i class="input-icon uil uil-at"></i>
-            </div>	
-            <div class="form-group">
-                <h5 class="input-placeholder" id="pword-txt">Password<span class="error-message" id="password-error"></span></h5>
-                <input type="password" v-model="passwordSignup" required="true" name="signupPass" class="form-style" id="signupPass" autocomplete="on">
-            <i class="input-icon uil uil-lock-alt"></i>
+              <h5 class="input-placeholder" id="email-txt">Email<span class="error-message" id="email-error"></span></h5>
+              <input type="email" v-model="emailSignin" required="true" name="logemail" class="form-style" id="logemail" autocomplete="off" style="margin-bottom: 20px;">
+              <i class="input-icon uil uil-at"></i>
             </div>
-        </div>
-        <div class="password-container">
-          <router-link class="link" to="/signin"> Already have an account ? </router-link>
-        </div>
+            <div class="form-group">
+              <h5 class="input-placeholder" id="pword-txt">Password<span class="error-message" id="password-error"></span></h5>
+              <input type="password" v-model="passwordSignin" required="true" name="logpass" class="form-style" id="logpass" autocomplete="on">
+              <i class="input-icon uil uil-lock-alt"></i>
+            </div>
+          </div>
+          <div class="password-container">
+            <router-link class="link" to="/signup"> Don't have an account ? </router-link>
+          </div>
           <div class="btn-position">
-          <a href="#" class="btn" @click="signup()">Sign up</a>
+            <a href="#" class="btn" @click="signin()">Sign in</a>
+          </div>
+        </div>
+        <div class="horizontalSeparator"></div>
+        <div class="qr-login">
+          <div class="qr-container">
+            <img class="logo" src="https://cdn.discordapp.com/attachments/742854174324031528/771346778356318248/ChallengerCarl_2.png"/>
+            <canvas id="qr-code"></canvas>
+          </div>
+          <div class="qr-pheader">Log in with QR Code</div>
+          <div class="qr-sheader">Scan this with the <strong>scanner app </strong>to log in instantly.</div>
         </div>
       </div>
-      <div class="horizontalSeparator"></div>
-      <div class="qr-login">
-        <div class="qr-container">
-          <img class="logo" src="https://cdn.discordapp.com/attachments/742854174324031528/771346778356318248/ChallengerCarl_2.png"/>
-          <canvas id="qr-code"></canvas>
-        </div>
-        <div class="qr-pheader">Log in with QR Code</div>
-        <div class="qr-sheader">Scan this with the <strong>scanner app </strong>to log in instantly.</div>
-      </div>
-    </div>
-  </form>
-</div>
+    </form>
+  </div>
 
 </template>
 
@@ -149,7 +144,7 @@
 }
 
 .section1{
-  position: relative; 
+  position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -168,7 +163,7 @@
 .primary-header{
   color: #fff;
   font-size: 24px;
-  line-height: 30px; 
+  line-height: 30px;
   font-weight: 600;
   margin-bottom: 8px;
 }
@@ -183,7 +178,7 @@
   margin-top: 20px;
 }
 
-.form-group{ 
+.form-group{
   width: 100%;
   text-align: left;
 }
@@ -252,7 +247,7 @@
   place-items: center;
 }
 
-.btn{  
+.btn{
   text-decoration: none;
   border-radius: 4px;
   height: 44px;
@@ -276,7 +271,7 @@
   cursor: pointer;
 }
 
-.btn:hover{  
+.btn:hover{
   background-color: #677bc4;
   box-shadow: 0 8px 24px 0 rgba(16,39,112,.2);
 }

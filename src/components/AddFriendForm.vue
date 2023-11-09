@@ -1,9 +1,27 @@
 <script setup lang="ts">
+  import {addNewFriend} from "@/api/relationship.req";
+  import {ref} from "vue";
+  import { useToastStore } from '@/stores/toast.store';
+
+
   const emit = defineEmits(['confirm', 'cancel'])
+  const toastStore = useToastStore();
+  const username = ref("")
 
   function sendFriendRequest() {
-    console.log("send")
     emit('confirm')
+    if (username.value !== "") {
+      addNewFriend({username : username.value}).then(
+          res => {
+            if (res.data !== "friend added") {
+              toastStore.showErrorToast(res.data)
+            } else {
+              toastStore.showSuccessToast(username.value + " is now your friend !")
+            }
+          }
+      )
+
+    }
   }
 </script>
 
@@ -11,14 +29,14 @@
   <div class="modal-container">
     <div class="position">
       <form class="container">
-        <span class="modal-close" @click="emit('cancel')">x</span>
+        <span class="modal-close" @click="emit('cancel')">X</span>
         <div class="centering-wrapper">
           <div class="">
             <div class="primary-header">Add friend </div>
             <div class="input-position">
               <div class="form-group">
                 <div class="input-placeholder" id="email-txt">You can add friends with discord username<span class="error-message" id="email-error"></span></div>
-                <input type="text" required="true" name="logemail" class="form-style" id="logemail" autocomplete="off" style="margin-bottom: 20px;">
+                <input type="text" required="true" name="friendUsername" v-model="username" class="form-style" id="friendUesrnameId" autocomplete="off" style="margin-bottom: 20px;">
                 <i class="input-icon uil uil-at"></i>
               </div>
             </div>
@@ -28,21 +46,10 @@
           </div>
           <div class="horizontalSeparator"></div>
         </div>
-<!--        <button class="modal-button" @click="emit('confirm')">Confirm</button>
-        <button class="modal-button" @click="emit('cancel')">Cancel</button>-->
       </form>
     </div>
     <div class="modal-action">
-
     </div>
-<!--    <div class="modal-body">
-      <span class="modal-close" @click="emit('cancel')">🗙</span>
-      <h2>AddFriendForm</h2>
-      <div class="modal-action">
-        <button class="modal-button" @click="emit('confirm')">Confirm</button>
-        <button class="modal-button" @click="emit('cancel')">Cancel</button>
-      </div>
-    </div>-->
   </div>
 
 </template>
@@ -208,7 +215,7 @@
   font-size: 12px;
   font-weight: 600;
   line-height: 16px;
-  //text-transform: uppercase;
+  /*text-transform: uppercase; */
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;

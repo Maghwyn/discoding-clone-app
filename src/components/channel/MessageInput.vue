@@ -8,6 +8,9 @@ const props = defineProps<{
 	contextId: string;
 }>();
 
+// TODO: If the user is blocked when the context is "conversation", modify the ui as in "you cannot send a message to this user"
+// TODO: For that we need to retrieve the relationship tho.
+
 const sendAction = props.context === 'conversation' ? sendPrivateMessage : () => {};
 const inputArea = ref<HTMLTextAreaElement>();
 const onInput = () => {

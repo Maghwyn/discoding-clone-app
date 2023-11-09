@@ -1,12 +1,39 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import IconRoundPlus from '@/components/icons/IconRoundPlus.vue';
+import { sendPrivateMessage } from '@/api/messages.req';
 
+const props = defineProps<{
+	context: 'server' | 'conversation',
+	contextId: string;
+}>();
+
+const sendAction = props.context === 'conversation' ? sendPrivateMessage : () => {};
 const inputArea = ref<HTMLTextAreaElement>();
 const onInput = () => {
-	console.log(inputArea.value)
 	inputArea.value.style.height = "";
 	inputArea.value.style.height = inputArea.value.scrollHeight + "px";
+}
+
+const sendMessage = async (event: KeyboardEvent) => {
+	if (event.key !== 'Enter' || event.shiftKey) return;
+	event.preventDefault();
+
+	const data = inputArea.value.value.trim();
+	if(data === "") return;
+
+	try {
+		await sendAction({
+			contextId: props.contextId,
+			content: data,
+		})
+
+		// Reset message
+		inputArea.value.value = "";
+		onInput();
+	} catch(err) {
+		console.error(err);
+	}
 }
 </script>
 
@@ -27,6 +54,7 @@ const onInput = () => {
 							placeholder="Message #RandomGuy"
 							ref="inputArea"
 							@input="onInput"
+							@keydown="sendMessage"
 						></textarea>
 					</div>
 					<div class="h-auto flex items-start justify-center">

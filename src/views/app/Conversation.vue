@@ -103,6 +103,7 @@ const isFollowup = (index: number) => {
 					:can-delete="userId === message.userId"
 					:is-followup="isFollowup(index)"
 					:created-at="message.createdAt"
+					:is-blocked="false"
 					:key="`msg_channel_${index}`"
 				/>
 			</div>

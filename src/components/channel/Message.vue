@@ -3,6 +3,8 @@ import { ref, watch, computed, nextTick } from 'vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';
+import IconBlock from '@/components/icons/IconBlock.vue';
+import IconFlag from '@/components/icons/IconFlag.vue';
 import { formatDateHM, formatDateYMDHM } from '@/utils/date.helper';
 import { editMessage } from '@/api/messages.req';
 import { deletePrivateMessage } from '@/api/messages.req';
@@ -18,6 +20,7 @@ const props = defineProps<{
 	isFollowup: boolean;
 	canEdit: boolean;
 	canDelete: boolean;
+	isBlocked: boolean;
 }>();
 
 const messagesStore = useMessagesStore();
@@ -102,6 +105,14 @@ const supressMessage = async () => {
 		}
 	});
 }
+
+const blockUser = () => {
+	// TODO: Logic
+}
+
+const signalUser = () => {
+	// TODO: Logic
+}
 </script>
 
 <template>
@@ -112,7 +123,14 @@ const supressMessage = async () => {
 					<IconEdit @click="openEditMode" width="18" height="18" class="hover:text-orange-500"/>
 				</div>
 				<div v-if="canDelete" class="px-1.5 py-1 flex items-center justify-center">
-					<IconDelete @click="supressMessage" width="18" height="18"  class="hover:text-red-500"/>
+					<IconDelete @click="supressMessage" width="18" height="18" class="hover:text-red-500"/>
+				</div>
+				<div class="group px-1.5 py-1 flex items-center justify-center">
+					<IconBlock @click="blockUser" width="18" height="18" class="group-hover:text-red-500"/>
+					<div v-if="isBlocked" class="absolute h-3/4 w-[5px] rotate-45 rounded-sm border-[2px] border-[#2e3035] bg-red-500"></div>
+				</div>
+				<div class="px-1.5 py-1 flex items-center justify-center">
+					<IconFlag @click="signalUser" width="18" height="18" class="hover:text-red-500"/>
 				</div>
 			</div>
 			<template v-if="!isFollowup">

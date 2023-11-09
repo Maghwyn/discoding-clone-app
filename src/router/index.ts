@@ -37,6 +37,10 @@ const routes: Array<RouteRecordRaw> = [
 				component: () => import('../views/app/ServerDiscovery.vue'),
 			},
 			{
+				path: 'friends',
+				component: () => import('../views/app/Friends.vue')
+			},
+			{
 				path: 'channels',
 				children: [
 					{

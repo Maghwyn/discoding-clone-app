@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { pick } from '@/utils/object.helper';
 import type { KeysRequired } from '@/interfaces/advanced-types.interface';
 import type { DirectMessagesStore } from '@/interfaces/direct-messages.interface';
+import type { DirectMessages } from '@/api/conversations.req.type';
 
 const directMessagesStoreDefaultState = (): DirectMessagesStore => ({
 	channels: [],
@@ -14,6 +15,12 @@ export const useDirectMessagesStore = defineStore('conversations', {
 	actions: {
 		findById(this: DirectMessagesStore, channelId: string) {
 			return this.channels.find((c) => c.id === channelId);
+		},
+		addChannel(this: DirectMessagesStore, directMessage: DirectMessages) {
+			const id = this.channels.findIndex((c) => c.id === directMessage.id);
+			if (id === -1) {
+				this.channels.unshift(directMessage);
+			}
 		},
 		reset(this: DirectMessagesStore, keys?: Array<KeysRequired<DirectMessagesStore>>) {
 			Object.assign(

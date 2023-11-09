@@ -2,10 +2,11 @@
 import { ref } from 'vue';
 import Swal from 'sweetalert2';
 import { AxiosError } from 'axios';
+import type { Router } from 'vue-router';
 
 import { useToastStore } from '@/stores/toast.store';
 import { sendPrivateMessage } from '@/api/messages.req';
-import type { Router } from 'vue-router';
+import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
 const props = defineProps<{
 	name: string;
@@ -13,6 +14,7 @@ const props = defineProps<{
 	router: Router; // Need the instance, vue router is undefined inside hypescript
 }>()
 
+const directMessagesStore = useDirectMessagesStore()
 const toastStore = useToastStore();
 const message = ref("");
 
@@ -25,7 +27,9 @@ const sendFirstMessage = async () => {
 				contextId: props.interlocutorId,
 			})
 			
-			props.router.push(`/app/channels/${res.data}`);
+			directMessagesStore.addChannel(res.data);
+			directMessagesStore.active = res.data.id;
+			props.router.push(`/app/channels/${res.data.id}`);
 			Swal.close();
 		} catch(err) {
 			if (err instanceof AxiosError) {

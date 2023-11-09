@@ -11,7 +11,6 @@ defineProps<{
 }>();
 
 const emits = defineEmits(['sidebar'])
-
 const actionSidebar = () => {
 	emits('sidebar');
 }
@@ -49,7 +48,11 @@ const actionSidebar = () => {
 				<IconGroup/>
 			</button>
 		</div>
-		<SearchInput class="w-56"/>
+		<SearchInput
+			class="w-56"
+			:name="channelName"
+			:context="type"
+		/>
 	</div>
 </template>
 

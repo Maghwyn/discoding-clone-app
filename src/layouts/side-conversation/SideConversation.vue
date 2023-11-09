@@ -1,42 +1,22 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, watch, computed } from 'vue';
 import SideConversationItem from '@/layouts/side-conversation/SideConversationItem.vue';
 import VoiceStatusFooter from '@/components/ui/VoiceStatusFooter.vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
 import IconCross from '@/components/icons/IconCross.vue';
+import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
-// TODO: 
-const conversations = ref([
-	{
-		id: "X1",
-		userPicture: "https://picsum.photos/200?random=1",
-		username: "Bobyis",
-	},
-	{
-		id: "X2",
-		userPicture: "https://picsum.photos/200?random=2",
-		username: "Ronald",
-	},
-	{
-		id: "X3",
-		userPicture: "https://picsum.photos/200?random=3",
-		username: "Hugo",
-	},
-]);
+const directMessagesStore = useDirectMessagesStore();
+const channels = computed(() => directMessagesStore.channels);
+const active = computed(() => directMessagesStore.active);
 
-const relationshipNotificationCount = ref(3);
-
-const active = ref('default');
 const setActive = (id: string) => {
-	console.log("before", active.value)
-	console.log("now", id)
-	active.value = id; // TODO: Bug, but i'm unsure as to why it happens.
-} 
+	directMessagesStore.active = id;
+}
 
-watch(active, v => {
-	console.log("after", v)
-})
+// TODO: This should be related to the relationship / pending / blocked or other stuff with notification
+const relationshipNotificationCount = ref(3);
 </script>
 
 <template>
@@ -76,13 +56,13 @@ watch(active, v => {
 
 			<ul class="flex flex-col gap-0.5">
 				<SideConversationItem
-					v-for="conv in conversations"
-					:goto="`/app/channels/${conv.id}`"
-					:name="conv.username"
-					:image="conv.userPicture"
-					:isActive="active === conv.id"
-					@click="setActive(conv.id)"
-					:key="`conv_${conv.id}`"
+					v-for="channel in channels"
+					:goto="`/app/channels/${channel.id}`"
+					:name="channel.username"
+					:image="channel.userPicture"
+					:isActive="active === channel.id"
+					@click="setActive(channel.id)"
+					:key="`conv_${channel.id}`"
 				>
 					<template v-slot:badge>
 						<div class="flex-0 w-4 ml-0 relative w-auto flex-shrink-0 px-2 py-2 hidden group-hover:block ">

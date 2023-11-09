@@ -1,66 +1,33 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, computed } from 'vue';
+import { useRoute } from 'vue-router';
+
 import SideConversation from '@/layouts/side-conversation/SideConversation.vue';
 import Message from '@/components/channel/Message.vue';
 import ChannelHeader from '@/components/channel/ChannelHeader.vue';
 import MessageOrigin from '@/components/channel/MessageOrigin.vue';
 import MessageInput from '@/components/channel/MessageInput.vue';
+import { retrieveChannelMessages } from '@/api/messages.req';
+import { useMessagesStore } from '@/stores/messages.store';
+import { MessageContext } from '@/api/messages.req.type';
+import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
-const userId = ref("100");
+const route = useRoute();
+const directMessagesStore = useDirectMessagesStore();
+const messageStore = useMessagesStore();
+const channelId = route.params.id as string;
+const directMessage = directMessagesStore.findById(channelId);
+const messages = computed(() => messageStore.messages);
+const isBlocked = computed(() => messages.value.some((m) => m.isBlocked));
 
-// TODO: Retrieve the messages on the channels store or smt
-// TODO: When inputing a new message, we await the api call and add it to the array if we're still on the page
-const messages = ref([
-	{
-		userId: "100",
-		userPicture: "https://picsum.photos/200?random=100",
-		username: "Maghwyn",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "100",
-		userPicture: "https://picsum.photos/200?random=100",
-		username: "Maghwyn",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "100",
-		userPicture: "https://picsum.photos/200?random=100",
-		username: "Maghwyn",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "100",
-		userPicture: "https://picsum.photos/200?random=100",
-		username: "Maghwyn",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "99",
-		userPicture: "https://picsum.photos/200?random=2",
-		username: "Ronald",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "99",
-		userPicture: "https://picsum.photos/200?random=2",
-		username: "Ronald",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-	{
-		userId: "100",
-		userPicture: "https://picsum.photos/200?random=100",
-		username: "Maghwyn",
-		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
-		createdAt: new Date().toISOString(),
-	},
-])
+onMounted(async () => {
+	try {
+		const res = await retrieveChannelMessages(channelId, MessageContext.CONVERSATION);
+		messageStore.messages = res.data || [];
+	} catch(err) {
+		console.error(err);
+	}
+})
 
 const isFollowup = (index: number) => {
 	if (index > 0) {
@@ -68,7 +35,7 @@ const isFollowup = (index: number) => {
 		const previousMessage = messages.value[index - 1];
 		const currentTime = +new Date(currentMessage.createdAt);
 		const previousTime = +new Date(previousMessage.createdAt);
-		const isSameUser = currentMessage.userId === previousMessage.userId;
+		const isSameUser = currentMessage.username === previousMessage.username;
 		const timeDifference = (currentTime - previousTime) / (1000 * 60);
 		return isSameUser && timeDifference <= 5;
 	}
@@ -80,25 +47,37 @@ const isFollowup = (index: number) => {
 	<SideConversation/>
 	<div class="flex grow flex-col h-full relative">
 		<ChannelHeader
-			user-picture="https://picsum.photos/200?random=2"
-			channelName="Ronald"
+			:user-picture="directMessage?.userPicture"
+			:channel-name="directMessage?.username"
 			type="conversation"
 		/>
 		<div class="relative flex flex-1 flex-col flex-col-reverse min-h-0 min-w-0 z-0 overflow-scroll">
 			<div class="flex flex-col pb-[1.5rem]">
 				<Message
 					v-for="(message, index) in messages"
+					:message-id="message.id"
 					:user-picture="message.userPicture"
 					:username="message.username"
 					:content="message.content"
-					:can-edit="userId === message.userId"
+					:can-edit="message.isOwner"
+					:can-delete="message.isOwner"
 					:is-followup="isFollowup(index)"
 					:created-at="message.createdAt"
+					:is-blocked="message.isBlocked"
 					:key="`msg_channel_${index}`"
 				/>
 			</div>
-			<MessageOrigin/>
+			<MessageOrigin
+				:user-picture="directMessage?.userPicture"
+				:channel-name="directMessage?.username"
+				type="conversation"
+			/>
 		</div>
-		<MessageInput/>
+		<MessageInput
+			:context-id="channelId"
+			:channel-name="directMessage?.username"
+			context="conversation"
+			:is-blocked="isBlocked"
+		/>
 	</div>
 </template>

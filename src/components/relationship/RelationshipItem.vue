@@ -66,7 +66,7 @@ const openModal = () => {
 				<div v-if="channelId" class="flex items-center justify-center w-8 h-8 min-w-[32px] rounded-[50%] bg-background text-white">
 					<IconMessage width="20" height="20"/>
 				</div>
-				<button v-else @click="openModal" class="flex items-center justify-center h-6 min-w-[32px] bg-background bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded">
+				<button v-else @click="openModal" class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded">
 					Send message
 				</button>
 			</div>

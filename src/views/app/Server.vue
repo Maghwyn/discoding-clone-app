@@ -95,7 +95,7 @@ const actionSidebar = (b: boolean) => {
 	<SideChannel/>
 	<div class="flex grow flex-col h-full relative">
 		<ChannelHeader
-			:channelName="currentChannelName"
+			:channel-name="currentChannelName"
 			type="server"
 			@sidebar="actionSidebar(!isSidebarOpen)"
 		/>
@@ -117,11 +117,16 @@ const actionSidebar = (b: boolean) => {
 							:key="`msg_channel_${index}`"
 						/>
 					</div>
-					<MessageOrigin/>
+					<MessageOrigin
+						:channel-name="currentChannelName"
+						type="server"
+					/>
 				</div>
 				<MessageInput
 					context-id="random"
+					:channel-name="currentChannelName"
 					context="server"
+					:isBlocked="false"
 				/>
 			</div>
 			<SideMember class="transition-all" :class="{ '!w-[0px] !min-w-[0px]': !isSidebarOpen, '': isSidebarOpen }"/>

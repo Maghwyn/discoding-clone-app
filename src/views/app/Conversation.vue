@@ -74,7 +74,7 @@ const isFollowup = (index: number) => {
 			/>
 		</div>
 		<MessageInput
-			:context-id="channelId"
+			:context-id="directMessage?.userId"
 			:channel-name="directMessage?.username"
 			context="conversation"
 			:is-blocked="isBlocked"

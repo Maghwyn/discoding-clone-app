@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
+import AddFriendForm from "@/components/AddFriendForm.vue";
+import {createConfirmDialog} from "vuejs-confirm-dialog";
 
+const { reveal } = createConfirmDialog(AddFriendForm)
 const emits = defineEmits(["tabChange"]);
 const changeTab = (tab: string) => {
 	emits('tabChange', tab);
@@ -39,9 +42,10 @@ const changeTab = (tab: string) => {
 					{{ 3 }}
 				</div>
 			</button>
-			<button class="px-2 bg-[#248046] text-white text-[14px] rounded-sm">Add Friend</button>
+			<button class="px-2 bg-[#248046] text-white text-[14px] rounded-sm" @click="reveal">Add Friend</button>
 		</div>
 	</div>
+  <DialogsWrapper />
 </template>
 
 <style>

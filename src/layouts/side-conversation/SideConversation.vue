@@ -66,7 +66,7 @@ const relationshipNotificationCount = ref(3);
 				</SideConversationItem>
 			</ul>
 
-			<h2 @click="openModal" class="cursor-pointer whitespace-nowrap overflow-ellipsis overflow-hidden uppercase text-xs leading-4 tracking-wide flex-1 flex items-center h-[40px] text-[#949ba4] hover:text-white" style="padding: 18px 0px 4px 18px;">
+			<h2 @click="openModal" class="cursor-pointer whitespace-nowrap overflow-ellipsis overflow-hidden uppercase text-xs leading-4 tracking-wide flex-1 flex items-center h-[40px] text-[#949ba4] hover:text-white mb-1" style="padding: 18px 0px 4px 18px;">
 				<span class="flex-1 overflow-hidden overflow-ellipsis">Direct Messages</span>
 				<div class="flex-0 w-4 h-4 ml-0 mr-2 relative w-auto flex-shrink-0">
 					<IconPlus width="16" height="16"/>

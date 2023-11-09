@@ -1,8 +1,9 @@
 import { http } from "@/api/network/axios";
-import type { CreatePrivateMessagePayload, MessageContext } from "@/api/messages.req.type";
+import type { CreatePrivateMessagePayload, Message, MessageContext } from "@/api/messages.req.type";
+import type { DirectMessages } from "@/api/conversations.req.type";
 
 export const sendPrivateMessage = (payload: CreatePrivateMessagePayload) => {
-	return http.post('/messages/private', payload);
+	return http.post<DirectMessages>('/messages/private', payload);
 } 
 
 export const deletePrivateMessage = (messageId: string) => {
@@ -14,5 +15,5 @@ export const editMessage = (messageId: string, content: string) => {
 }
 
 export const retrieveChannelMessages = (channelId: string, context: MessageContext) => {
-	return http.get(`/messages/channel/${channelId}?context=${context}`);
+	return http.get<Array<Message>>(`/messages/channel/${channelId}?context=${context}`);
 }

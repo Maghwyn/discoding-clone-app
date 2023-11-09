@@ -1,13 +1,30 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { h, render }from 'vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
-import AddFriendForm from "@/components/AddFriendForm.vue";
-import {createConfirmDialog} from "vuejs-confirm-dialog";
+import AddFriendForm from "@/components/form/AddFriendForm.vue";
+import Swal from 'sweetalert2';
 
-const { reveal } = createConfirmDialog(AddFriendForm)
+defineProps<{
+	tab: string;
+}>()
+
 const emits = defineEmits(["tabChange"]);
 const changeTab = (tab: string) => {
 	emits('tabChange', tab);
+}
+
+const openModal = () => {
+	Swal.fire({
+		html: '<div id="VueSweetAlert2"></div>',
+		showConfirmButton: false,
+		background: 'transparent',
+		willOpen() {
+			const vnode = h(AddFriendForm);
+			const el = document.createElement("div");
+			render(vnode, el);
+			document.getElementById('VueSweetAlert2').appendChild(el);
+		},
+	})
 }
 </script>
 
@@ -15,26 +32,28 @@ const changeTab = (tab: string) => {
 	<div class="flex flex-row z-10 h-12 relashionship-header-shadow items-center px-3">
 		<div class="min-w-[0px] flex items-center rounded h-[42px]">
 			<div class="flex items-center justify-center w-6 h-6 min-w-[24px] text-[#949ba4] mr-2">
-				<IconFriend width="20" height="20"/>
+				<IconFriend width="22" height="22"/>
 			</div>
 			<div class="flex-auto min-w-[0px] whitespace-nowrap text-ellipsis overflow-hidden">
 				<div class="flex justify-start items-center">
 					<span class="font-medium leading-5 text-[15px] whitespace-nowrap overflow-hidden overflow-ellipsis flex-shrink-0 text-white">
-						{{ "Friends" }}
+						Friends
 					</span>
 				</div>
 			</div>
 		</div>
-		<div class="bg-white bg-opacity-10 mx-auto h-5 w-[1px] mx-3"/>
+		<div class="bg-white bg-opacity-10 h-5 w-[1px] mx-3"/>
 		<div class="grow flex gap-3">
 			<button
-				class="px-2 py-0.5 hover:bg-[#4E50584D] text-[#949ba4] hover:text-white text-[14px] rounded-sm" 
+				class="px-2 py-0.5 hover:bg-[#4E50584D] text-[#949ba4] hover:text-white text-[14px] rounded-sm"
+				:class="{ 'bg-[#4E505887] text-white': tab === 'all' }" 
 				@click="changeTab('all')"
 			>
 				All
 			</button>
 			<button
 				class="px-2 hover:bg-[#4E50584D] text-[#949ba4] hover:text-white text-[14px] rounded-sm flex items-center justify-between gap-2"
+				:class="{ 'bg-[#4E505887] text-white': tab === 'blocked' }" 
 				@click="changeTab('blocked')"
 			>
 				<span>Blocked</span>
@@ -42,10 +61,9 @@ const changeTab = (tab: string) => {
 					{{ 3 }}
 				</div>
 			</button>
-			<button class="px-2 bg-[#248046] text-white text-[14px] rounded-sm" @click="reveal">Add Friend</button>
+			<button class="px-2 bg-[#248046] text-white text-[14px] rounded-sm" @click="openModal">Add Friend</button>
 		</div>
 	</div>
-  <DialogsWrapper />
 </template>
 
 <style>

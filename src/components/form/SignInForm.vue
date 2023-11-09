@@ -30,8 +30,8 @@ const trySignin = async () => {
 
 
 <template>
-	<div class="position">
-		<form class="container-auth" @submit.prevent="trySignin">
+	<div class="position-auth">
+		<form class="container-form" @submit.prevent="trySignin">
 			<div class="centering-wrapper">
 				<div class="section1 text-center">
 					<div class="primary-header">Welcome back !</div>

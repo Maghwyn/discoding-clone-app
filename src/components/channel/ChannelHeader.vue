@@ -50,8 +50,8 @@ const actionSidebar = () => {
 		</div>
 		<SearchInput
 			class="w-56"
-			:name="channelName"
-			:context="type"
+			:placeholder="`Search a message in ${type === 'conversation' ? '@' : '#' }${channelName}`"
+			:searchAction="() => {}"
 		/>
 	</div>
 </template>

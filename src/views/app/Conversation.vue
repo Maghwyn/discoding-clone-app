@@ -16,7 +16,7 @@ const route = useRoute();
 const directMessagesStore = useDirectMessagesStore();
 const messageStore = useMessagesStore();
 const channelId = route.params.id as string;
-const directMessage = directMessagesStore.findById(channelId);
+const directMessage = computed(() => directMessagesStore.findById(channelId));
 const messages = computed(() => messageStore.messages);
 const isBlocked = computed(() => messages.value.some((m) => m.isBlocked));
 
@@ -74,7 +74,7 @@ const isFollowup = (index: number) => {
 			/>
 		</div>
 		<MessageInput
-			:context-id="channelId"
+			:context-id="directMessage?.userId"
 			:channel-name="directMessage?.username"
 			context="conversation"
 			:is-blocked="isBlocked"

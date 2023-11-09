@@ -5,6 +5,7 @@ import VoiceStatusFooter from '@/components/ui/VoiceStatusFooter.vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
 import IconCross from '@/components/icons/IconCross.vue';
+import IconDiscord from '@/components/icons/IconDiscord.vue';
 import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
 const directMessagesStore = useDirectMessagesStore();
@@ -54,7 +55,7 @@ const relationshipNotificationCount = ref(3);
 				</div>
 			</h2>
 
-			<ul class="flex flex-col gap-0.5">
+			<ul v-if="channels.length > 0" class="flex flex-col gap-0.5">
 				<SideConversationItem
 					v-for="channel in channels"
 					:goto="`/app/channels/${channel.id}`"
@@ -64,6 +65,11 @@ const relationshipNotificationCount = ref(3);
 					@click="setActive(channel.id)"
 					:key="`conv_${channel.id}`"
 				>
+					<template v-slot:icon>
+						<div class="flex items-center justify-center w-8 h-8 min-w-[32px] rounded-[50%] bg-pink-400 text-white">
+							<IconDiscord width="16" height="16"/>
+						</div>
+					</template>
 					<template v-slot:badge>
 						<div class="flex-0 w-4 ml-0 relative w-auto flex-shrink-0 px-2 py-2 hidden group-hover:block ">
 							<IconCross width="16" height="16"/>
@@ -71,6 +77,9 @@ const relationshipNotificationCount = ref(3);
 					</template>
 				</SideConversationItem>
 			</ul>
+			<div v-else class="w-full flex items-start justify-center pt-4">
+				<img src="/taken.svg" class="grayscale">
+			</div>
 		</div>
 		<VoiceStatusFooter />
 	</div>

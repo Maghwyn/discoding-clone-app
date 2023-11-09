@@ -26,7 +26,7 @@ const createDirectMessage = async (userId: string) => {
 		directMessagesStore.addChannel(res.data);
 		directMessagesStore.active = res.data.id;
 		props.router.push(`/app/channels/${res.data.id}`);
-		Swal.close();
+		closeSwalInstance()
 	} catch(err) {
 		if (err instanceof AxiosError) {
 			toastStore.showErrorToast(err.response.data.error);
@@ -34,6 +34,12 @@ const createDirectMessage = async (userId: string) => {
 	}
 }
 
+const jumpTo = (channelId: string) => {
+	props.router.push(`/app/channels/${channelId}`);
+	closeSwalInstance()
+}
+
+const channelsIds = computed(() => directMessagesStore.retrieveChannelsId());
 const relationships = computed(() => relationshipStore.filteredFriends(filter.value));
 const searchRelation = (username: string) => {
 	filter.value = username;
@@ -86,8 +92,19 @@ const closeSwalInstance = () => {
 												</div>
 											</div>
 											<div className="flex items-center gap-2.5">
-												<button @click="createDirectMessage(relation.userId)" class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded">
+												<button
+													v-if="!channelsIds.includes(relation.channelId)"
+													class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded"
+													@click="createDirectMessage(relation.userId)"
+												>
 													Create
+												</button>
+												<button
+													v-else
+													class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded"
+													@click="jumpTo(relation.channelId)"
+												>
+													Jump
 												</button>
 											</div>
 										</div>

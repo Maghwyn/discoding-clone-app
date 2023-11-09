@@ -16,7 +16,7 @@ onMounted(async () => {
 		const res = await retrieveDirectMessages();
 		directMessagesStore.channels = res.data || [];
 	} catch(err) {
-		console.log(err);
+		console.error(err);
 	}
 
 	try {

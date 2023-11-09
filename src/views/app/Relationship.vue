@@ -43,7 +43,7 @@ const onTabChange = async (tab: string) => {;
 	currentTab.value = tab;
 }
 
-const searchRelation = async (username: string) => {
+const searchRelation = (username: string) => {
 	if (currentTab.value === 'all') {
 		relationshipStore.friendUsernameFilter = username;
 	} else if(currentTab.value === 'blocked') {

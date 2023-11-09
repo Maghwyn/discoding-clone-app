@@ -49,8 +49,8 @@ const openModal = () => {
 					height="32"
 					class="inset-0 z-0 rounded-[50%]"
 				/>
-				<div v-else class="flex items-center justify-center w-6 h-6 min-w-[24px] rounded-[50%] bg-pink-400 text-white">
-					<IconDiscord width="14" height="14"/>
+				<div v-else class="flex items-center justify-center w-8 h-8 min-w-[32px] rounded-[50%] bg-pink-400 text-white">
+					<IconDiscord width="20" height="20"/>
 				</div>
 
 				<div class="flex-1 leading-4">
@@ -63,8 +63,8 @@ const openModal = () => {
 				</div>
 			</div>
 			<div className="flex items-center gap-2.5">
-				<div v-if="channelId" class="flex items-center justify-center w-8 h-8 min-w-[32px] rounded-[50%] bg-background text-white">
-					<IconMessage width="20" height="20"/>
+				<div v-if="channelId" class="flex items-center justify-center w-7 h-7 min-w-[28px] rounded-[50%] bg-background text-white">
+					<IconMessage width="18" height="18"/>
 				</div>
 				<button v-else @click="openModal" class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded">
 					Send message

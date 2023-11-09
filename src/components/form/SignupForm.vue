@@ -33,8 +33,8 @@ const trySignup = async () => {
 </script>
 
 <template>
-	<div class="position">
-		<form class="container-auth" @submit.prevent="trySignup">
+	<div class="position-auth">
+		<form class="container-form" @submit.prevent="trySignup">
 			<div class="centering-wrapper">
 				<div class="section1 text-center">
 					<div class="primary-header">Welcome aboard !</div>

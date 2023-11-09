@@ -12,6 +12,7 @@ const userId = ref("100");
 // TODO: When inputing a new message, we await the api call and add it to the array if we're still on the page
 const messages = ref([
 	{
+		id: "10",
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
@@ -19,6 +20,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "11",
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
@@ -26,6 +28,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "12",
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
@@ -33,6 +36,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "13",
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
@@ -40,6 +44,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "14",
 		userId: "99",
 		userPicture: "https://picsum.photos/200?random=2",
 		username: "Ronald",
@@ -47,6 +52,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "15",
 		userId: "99",
 		userPicture: "https://picsum.photos/200?random=2",
 		username: "Ronald",
@@ -54,6 +60,7 @@ const messages = ref([
 		createdAt: new Date().toISOString(),
 	},
 	{
+		id: "16",
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
@@ -88,10 +95,12 @@ const isFollowup = (index: number) => {
 			<div class="flex flex-col pb-[1.5rem]">
 				<Message
 					v-for="(message, index) in messages"
+					:message-id="message.id"
 					:user-picture="message.userPicture"
 					:username="message.username"
 					:content="message.content"
 					:can-edit="userId === message.userId"
+					:can-delete="userId === message.userId"
 					:is-followup="isFollowup(index)"
 					:created-at="message.createdAt"
 					:key="`msg_channel_${index}`"
@@ -99,6 +108,9 @@ const isFollowup = (index: number) => {
 			</div>
 			<MessageOrigin/>
 		</div>
-		<MessageInput/>
+		<MessageInput
+			context-id="random"
+			context="conversation"
+		/>
 	</div>
 </template>

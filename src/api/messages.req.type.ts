@@ -6,6 +6,7 @@ export type CreatePrivateMessagePayload = {
 export type Message = {
 	id: string;
 	isOwner: boolean;
+	userId: string;
 	userPicture: string;
 	username: string;
 	content: string;

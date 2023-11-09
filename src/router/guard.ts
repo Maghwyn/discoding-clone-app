@@ -10,13 +10,14 @@ router.beforeEach(async (to, from, next) => {
 		// If the flag is set to true and one of the meta is present
 		if (isAuth && (to.meta.requiresAuth || to.meta.forbiddenAfterAuth)) {
 			// We check for the validity of the auth token
-			await http.post('/auth');
+			await http.post('/auth')
 
 			// We verify if the route require auth.
 			if (to.meta.requiresAuth) return next();
 
 			// We verify if the route is forbidden after auth.
-			if (to.meta.forbiddenAfterAuth) return next(from.path || '/app');
+			if (to.meta.forbiddenAfterAuth && from.path !== '/') return next(from.path);
+			else if (to.meta.forbiddenAfterAuth) return next('/app/channels/me');
 		}
 
 		// If the flag is not set to true and the auth is required

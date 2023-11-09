@@ -1,13 +1,55 @@
-<script lang=ts setup>
-// <section class="title_b7d661 container__11d72 themed_b152d4" aria-label="Channel header">
-// 	<div class="upperContainer__993ba">
-// 		<div class="children__32014"><span class="hiddenVisually__06c3e">Direct Message</span>
-// 			<div><div class="wrapper_edb6e0 avatar__7c789" role="img" aria-label="Lunoronti, Offline" aria-hidden="false" style="width: 24px; height: 24px;"><svg width="30" height="30" viewBox="0 0 30 30" class="mask__1979f svg_f5b652" aria-hidden="true"><foreignObject x="0" y="0" width="24" height="24" mask="url(#svg-mask-avatar-status-round-24)"><div class="avatarStack__6604a"><img src="https://cdn.discordapp.com/avatars/815937617459281970/96458b8ae03f007e6c9b55d370edf740.webp?size=44" alt=" " class="avatar__991e2" aria-hidden="true"></div></foreignObject><rect width="8" height="8" x="16" y="16" fill="#80848e" mask="url(#svg-mask-status-offline)" class="pointerEvents__33f6a"></rect></svg></div></div><div class="titleWrapper__482dc" role="button" tabindex="0"><h1 class="defaultColor__77578 heading-md-semibold__574c7 defaultColor__87d87 cursorPointer__5116a title__9e2b0" data-text-variant="heading-md/semibold"><div aria-label="lunoronti">Lunoronti</div></h1></div><div class="spacer__57b6a"></div></div><div class="toolbar__88c63"><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Start Voice Call" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M11 5V3C16.515 3 21 7.486 21 13H19C19 8.589 15.411 5 11 5ZM17 13H15C15 10.795 13.206 9 11 9V7C14.309 7 17 9.691 17 13ZM11 11V13H13C13 11.896 12.105 11 11 11ZM14 16H18C18.553 16 19 16.447 19 17V21C19 21.553 18.553 22 18 22H13C6.925 22 2 17.075 2 11V6C2 5.447 2.448 5 3 5H7C7.553 5 8 5.447 8 6V10C8 10.553 7.553 11 7 11H6C6.063 14.938 9 18 13 18V17C13 16.447 13.447 16 14 16Z"></path></svg></div><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Start Video Call" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.526 8.149C21.231 7.966 20.862 7.951 20.553 8.105L18 9.382V7C18 5.897 17.103 5 16 5H4C2.897 5 2 5.897 2 7V17C2 18.104 2.897 19 4 19H16C17.103 19 18 18.104 18 17V14.618L20.553 15.894C20.694 15.965 20.847 16 21 16C21.183 16 21.365 15.949 21.526 15.851C21.82 15.668 22 15.347 22 15V9C22 8.653 21.82 8.332 21.526 8.149Z"></path></svg></div><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Pinned Messages" aria-expanded="false" tabindex="0"><svg width="24" height="24" class="svg__7900e" viewBox="0 0 24 24"><foreignObject x="0" y="0" width="24" height="24" overflow="visible" mask="url(#svg-mask-header-bar-badge)"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12L12.101 2.10101L10.686 3.51401L12.101 4.92901L7.15096 9.87801V9.88001L5.73596 8.46501L4.32196 9.88001L8.56496 14.122L2.90796 19.778L4.32196 21.192L9.97896 15.536L14.222 19.778L15.636 18.364L14.222 16.95L19.171 12H19.172L20.586 13.414L22 12Z"></path></svg></foreignObject></svg><span class="iconBadge_cc5031"></span></div><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Add Friends to DM" aria-expanded="false" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M21 3H24V5H21V8H19V5H16V3H19V0H21V3ZM10 12C12.205 12 14 10.205 14 8C14 5.795 12.205 4 10 4C7.795 4 6 5.795 6 8C6 10.205 7.795 12 10 12ZM10 13C5.289 13 2 15.467 2 19V20H18V19C18 15.467 14.711 13 10 13Z"></path></svg></div><div class="iconWrapper_af9215" role="button" aria-label="Show User Profile (Unavailable)" tabindex="-1"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><g fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 22C12.4883 22 12.9684 21.965 13.438 21.8974C12.5414 20.8489 12 19.4877 12 18C12 17.6593 12.0284 17.3252 12.083 17H6V16.0244C6 14.0732 10 13 12 13C12.6215 13 13.436 13.1036 14.2637 13.305C15.2888 12.4882 16.5874 12 18 12C19.4877 12 20.8489 12.5414 21.8974 13.438C21.965 12.9684 22 12.4883 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22ZM12 12C13.66 12 15 10.66 15 9C15 7.34 13.66 6 12 6C10.34 6 9 7.34 9 9C9 10.66 10.34 12 12 12Z" fill="currentColor"></path><path d="M18 22C20.2091 22 22 20.2091 22 18C22 15.7909 20.2091 14 18 14C15.7909 14 14 15.7909 14 18C14 20.2091 15.7909 22 18 22Z" fill="currentColor"></path></g></svg></div><div class="search__07df0"><div class="search_ac353c"><div class="searchBar_e0c60b"><div class="DraftEditor-root"><div class="public-DraftEditorPlaceholder-root"><div class="public-DraftEditorPlaceholder-inner" id="placeholder-42i7a" style="white-space: pre-wrap;">Search</div></div><div class="DraftEditor-editorContainer"><div aria-describedby="placeholder-42i7a" aria-expanded="false" aria-label="Search" autocorrect="off" class="notranslate public-DraftEditor-content" contenteditable="true" role="combobox" spellcheck="false" style="outline: none; user-select: text; white-space: pre-wrap; overflow-wrap: break-word;" aria-haspopup="listbox"><div data-contents="true"><div class="" data-block="true" data-editor="42i7a" data-offset-key="emafr-0-0"><div data-offset-key="emafr-0-0" class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"><span data-offset-key="emafr-0-0"><br data-text="true"></span></div></div></div></div></div></div><div class="icon__46425 iconLayout__9fbb1 small_c2007e" tabindex="-1" aria-hidden="true" aria-label="Clear search" role="button"><div class="iconContainer__8fa9c"><svg class="icon_f50f05 visible__4d9aa" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M21.707 20.293L16.314 14.9C17.403 13.504 18 11.799 18 10C18 7.863 17.167 5.854 15.656 4.344C14.146 2.832 12.137 2 10 2C7.863 2 5.854 2.832 4.344 4.344C2.833 5.854 2 7.863 2 10C2 12.137 2.833 14.146 4.344 15.656C5.854 17.168 7.863 18 10 18C11.799 18 13.504 17.404 14.9 16.314L20.293 21.706L21.707 20.293ZM10 16C8.397 16 6.891 15.376 5.758 14.243C4.624 13.11 4 11.603 4 10C4 8.398 4.624 6.891 5.758 5.758C6.891 4.624 8.397 4 10 4C11.603 4 13.109 4.624 14.242 5.758C15.376 6.891 16 8.398 16 10C16 11.603 15.376 13.11 14.242 14.243C13.109 15.376 11.603 16 10 16Z"></path></svg><svg aria-hidden="true" role="img" class="icon_f50f05" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M18.4 4L12 10.4L5.6 4L4 5.6L10.4 12L4 18.4L5.6 20L12 13.6L18.4 20L20 18.4L13.6 12L20 5.6L18.4 4Z"></path></svg></div></div></div></div></div><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Update Ready!" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path class="updateIconForeground__30084" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M16.293 9.293L17.707 10.707L12 16.414L6.29297 10.707L7.70697 9.293L11 12.586V2H13V12.586L16.293 9.293ZM18 20V18H20V20C20 21.102 19.104 22 18 22H6C4.896 22 4 21.102 4 20V18H6V20H18Z"></path></svg></div><div class="recentsIcon__3c4cf"><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Inbox" aria-expanded="false" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M19 3H4.99C3.88 3 3.01 3.89 3.01 5L3 19C3 20.1 3.88 21 4.99 21H19C20.1 21 21 20.1 21 19V5C21 3.89 20.1 3 19 3ZM19 15H15C15 16.66 13.65 18 12 18C10.35 18 9 16.66 9 15H4.99V5H19V15Z" fill="currentColor"></path></svg></div></div><a tabindex="-1" class="anchor_c8ddc0 anchorUnderlineOnHover__78236" href="https://support.discord.com" rel="noreferrer noopener" target="_blank"><div class="iconWrapper_af9215 clickable_d23a1a" role="button" aria-label="Help" tabindex="0"><svg x="0" y="0" class="icon__4cb88" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.487 2 12C2 17.515 6.486 22 12 22C17.514 22 22 17.515 22 12C22 6.487 17.514 2 12 2ZM12 18.25C11.31 18.25 10.75 17.691 10.75 17C10.75 16.31 11.31 15.75 12 15.75C12.69 15.75 13.25 16.31 13.25 17C13.25 17.691 12.69 18.25 12 18.25ZM13 13.875V15H11V12H12C13.104 12 14 11.103 14 10C14 8.896 13.104 8 12 8C10.896 8 10 8.896 10 10H8C8 7.795 9.795 6 12 6C14.205 6 16 7.795 16 10C16 11.861 14.723 13.429 13 13.875Z"></path></svg></div></a></div></div></section>
+<script lang="ts" setup>
+import IconDiscord from '@/components/icons/IconDiscord.vue';
+import IconGroup from '@/components/icons/IconGroup.vue';
+import IconHashtag from '@/components/icons/IconHashtag.vue';
+import SearchInput from '@/components/ui/SearchInput.vue';
+
+defineProps<{
+	userPicture?: string;
+	channelName: string;
+	type: 'conversation' | 'server'
+}>();
+
+const emits = defineEmits(['sidebar'])
+
+const actionSidebar = () => {
+	emits('sidebar');
+}
 </script>
 
 <template>
-	<div class="flex flex-col z-10 h-12 channel-header-shadow">
-	
+	<div class="flex flex-row z-10 h-12 channel-header-shadow items-center px-3">
+		<div class="grow min-w-[0px] flex items-center rounded h-[42px]">
+			<div v-if="type === 'conversation'" class="flex items-center w-8 h-8 mr-1">
+				<img
+					v-if="userPicture"
+					:src="userPicture"
+					alt="xxx"
+					width="24"
+					height="24"
+					class="inset-0 z-0 rounded-[50%]"
+				/>
+				<div v-else class="flex items-center justify-center w-6 h-6 min-w-[24px] rounded-[50%] bg-pink-400 text-white">
+					<IconDiscord width="14" height="14"/>
+				</div>
+			</div>
+			<div v-else class="flex items-center justify-center w-6 h-6 min-w-[24px] mr-2 text-[#949ba4]">
+				<IconHashtag width="20" height="20"/>
+			</div>
+			<div class="flex-auto min-w-[0px] whitespace-nowrap text-ellipsis overflow-hidden">
+				<div class="flex justify-start items-center">
+					<span class="text-base font-medium leading-5 text-[16px] mb-0.5 whitespace-nowrap overflow-hidden overflow-ellipsis flex-shrink-0 text-white">
+						{{ channelName || "unknown" }}
+					</span>
+				</div>
+			</div>
+		</div>
+		<div v-if="type === 'server'" class="flex gap-2 items-center justify-center text-[#949ba4] hover:text-white">
+			<button class="p-3 cursor-pointer" @click="actionSidebar">
+				<IconGroup/>
+			</button>
+		</div>
+		<SearchInput class="w-56"/>
 	</div>
 </template>
 

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { ref, watch, computed } from 'vue';
+import Swal from 'sweetalert2';
+import { useRouter } from 'vue-router';
+import { ref, computed, h, render } from 'vue';
 import SideConversationItem from '@/layouts/side-conversation/SideConversationItem.vue';
 import VoiceStatusFooter from '@/components/ui/VoiceStatusFooter.vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
@@ -7,13 +9,29 @@ import IconPlus from '@/components/icons/IconPlus.vue';
 import IconCross from '@/components/icons/IconCross.vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import { useDirectMessagesStore } from '@/stores/direct-messages.store';
+import DirectMessagesForm from '@/components/form/DirectMessagesForm.vue';
 
+const router = useRouter();
 const directMessagesStore = useDirectMessagesStore();
 const channels = computed(() => directMessagesStore.channels);
 const active = computed(() => directMessagesStore.active);
 
 const setActive = (id: string) => {
 	directMessagesStore.active = id;
+}
+
+const openModal = () => {
+	Swal.fire({
+		html: '<div id="VueSweetAlert2"></div>',
+		showConfirmButton: false,
+		background: 'transparent',
+		willOpen() {
+			const vnode = h(DirectMessagesForm, { router });
+			const el = document.createElement("div");
+			render(vnode, el);
+			document.getElementById('VueSweetAlert2').appendChild(el);
+		},
+	})
 }
 
 // TODO: This should be related to the relationship / pending / blocked or other stuff with notification
@@ -48,7 +66,7 @@ const relationshipNotificationCount = ref(3);
 				</SideConversationItem>
 			</ul>
 
-			<h2 class="whitespace-nowrap overflow-ellipsis overflow-hidden uppercase text-xs leading-4 tracking-wide flex-1 flex items-center h-[40px] text-[#949ba4] hover:text-white" style="padding: 18px 0px 4px 18px;">
+			<h2 @click="openModal" class="cursor-pointer whitespace-nowrap overflow-ellipsis overflow-hidden uppercase text-xs leading-4 tracking-wide flex-1 flex items-center h-[40px] text-[#949ba4] hover:text-white" style="padding: 18px 0px 4px 18px;">
 				<span class="flex-1 overflow-hidden overflow-ellipsis">Direct Messages</span>
 				<div class="flex-0 w-4 h-4 ml-0 mr-2 relative w-auto flex-shrink-0">
 					<IconPlus width="16" height="16"/>
@@ -67,7 +85,7 @@ const relationshipNotificationCount = ref(3);
 				>
 					<template v-slot:icon>
 						<div class="flex items-center justify-center w-8 h-8 min-w-[32px] rounded-[50%] bg-pink-400 text-white">
-							<IconDiscord width="16" height="16"/>
+							<IconDiscord width="20" height="20"/>
 						</div>
 					</template>
 					<template v-slot:badge>

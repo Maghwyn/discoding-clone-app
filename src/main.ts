@@ -1,5 +1,6 @@
 import '@/styles/scss/packet.scss';
 import '@/styles/tailwindcss.css';
+import 'vue-final-modal/style.css'
 import 'vue3-toastify/dist/index.css';
 
 import { createApp } from 'vue';
@@ -7,9 +8,9 @@ import { createApp } from 'vue';
 import App from '@/App.vue';
 import pinia from '@/stores';
 import router from '@/router';
+import { createVfm } from 'vue-final-modal'
 import * as ConfirmDialog from 'vuejs-confirm-dialog'
 import '@/router/guard';
-
 
 import { withErrorHandler } from '@/utils/withErrorHandler';
 import { isAuthenticated } from '@/api/auth.req';
@@ -31,6 +32,7 @@ function bootVueApp() {
 
 	app.use(router);
 	app.use(pinia);
+	app.use(createVfm);
 	app.use(ConfirmDialog);
 	app.mount('#app');
 }

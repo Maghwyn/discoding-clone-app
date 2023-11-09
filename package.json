@@ -13,17 +13,20 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@sweetalert2/theme-dark": "^5.0.15",
     "autoprefixer": "^10.4.16",
     "axios": "^1.6.0",
     "pinia": "^2.1.7",
     "postcss": "^8.4.31",
     "sass": "^1.69.5",
     "socket.io-client": "^4.7.2",
+    "sweetalert2": "^11.9.0",
     "tailwindcss": "^3.3.5",
     "vue": "^3.3.4",
     "vue-final-modal": "^4.4.6",
     "vue-router": "^4.2.5",
-    "vue3-toastify": "^0.1.14"
+    "vue3-toastify": "^0.1.14",
+    "vuejs-confirm-dialog": "^0.5.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.3.3",

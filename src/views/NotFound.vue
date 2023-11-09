@@ -7,7 +7,7 @@
 			Whooops! Couldn't find what you looking for
 		</h2>
 		<router-link
-			to="/channels/me"
+			to="/app/channels/me"
 			class="py-4 text-sm text-gray-400 underline hover:text-gray-300"
 		>
 			Go back home

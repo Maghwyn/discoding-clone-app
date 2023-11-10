@@ -4,6 +4,9 @@ import type { Relation, RelationPayload, RelationType } from "@/api/relationship
 export const createOrUpdateRelation = (payload: RelationPayload) => {
 	return http.post('/relationships', payload);
 }
+export const addNewFriend = (friendPseudo: {username : string}) => {
+    return http.post('/relationships/addFriend', friendPseudo)
+}
 
 export const retrieveRelationList = (type: RelationType) => {
 	return http.get<Array<Relation>>(`/relationships?type=${type}`);

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
+import {ref, watch, computed, h, render} from 'vue';
 import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
-import { ref, computed, h, render } from 'vue';
 import SideConversationItem from '@/layouts/side-conversation/SideConversationItem.vue';
 import VoiceStatusFooter from '@/components/ui/VoiceStatusFooter.vue';
 import IconFriend from '@/components/icons/IconFriend.vue';
@@ -10,6 +10,7 @@ import IconCross from '@/components/icons/IconCross.vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 import DirectMessagesForm from '@/components/form/DirectMessagesForm.vue';
+import SearchForm from "@/components/form/SearchForm.vue";
 
 const router = useRouter();
 const directMessagesStore = useDirectMessagesStore();
@@ -36,13 +37,27 @@ const openModal = () => {
 
 // TODO: This should be related to the relationship / pending / blocked or other stuff with notification
 const relationshipNotificationCount = ref(3);
+
+const openSearchModale = () => {
+  Swal.fire({
+    html: '<div id="VueSweetAlert2"></div>',
+    showConfirmButton: false,
+    showCloseButton: true,
+    willOpen() {
+      const vnode = h(SearchForm);
+      const el = document.createElement("div");
+      render(vnode, el);
+      document.getElementById('VueSweetAlert2').appendChild(el);
+    },
+  })
+}
 </script>
 
 <template>
 	<div class="flex flex-col w-[240px] min-w-[240px] overflow-hidden">
 		<div class="bottom-70 flex flex-col z-10">
 			<div class="px-2 flex h-12 items-center bg-midground search-header-shadow">
-				<button class="flex w-full justify-between rounded-sm bg-background p-1.5 text-left text-xs text-[#949ba4] hover:bg-background/70">
+				<button @click="openSearchModale()" class="flex w-full justify-between rounded-sm bg-background p-1.5 text-left text-xs text-[#949ba4] hover:bg-background/70">
 					Find or start a conversation
 				</button>
 			</div>

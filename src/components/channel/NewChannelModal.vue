@@ -23,10 +23,11 @@ function onClose() {
 const channelName = ref('')
 
 async function createChannel(){
+  const serverId : string = store.channels[0].serverId
   const res = await addNewChannel({
     name: channelName.value,
     type: checked.value,
-    serverId : props.serverId
+    serverId : serverId
   })
   store.addChannel(res.data)
   emit('confirm');

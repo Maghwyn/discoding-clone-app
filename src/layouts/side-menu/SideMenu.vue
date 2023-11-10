@@ -32,7 +32,6 @@ const directMessageStore = useDirectMessagesStore();
 const messagesStore = useMessagesStore();
 const unreads = computed(() => {
 	const a = messagesStore.groupUnreadsByUsers
-	console.log(a)
 	return a;
 });
 // const notifcationCount = computed(() => messagesStore.groupUnreadsNotification);

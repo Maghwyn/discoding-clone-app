@@ -66,14 +66,9 @@ const defaultChannelNotificationCount = ref(0);
 
 const active = ref('default');
 const setActive = (id: string) => {
-	console.log("before", active.value)
-	console.log("now", id)
 	active.value = id; // TODO: Bug, but i'm unsure as to why it happens.
 } 
 
-watch(active, v => {
-	console.log("after", v)
-})
 watch(channels,()=>{
   defaultChannelName.value = channels.value.filter(chan => chan.isDefault == true)[0].name
 })

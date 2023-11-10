@@ -35,6 +35,7 @@ const createDirectMessage = async (userId: string) => {
 }
 
 const jumpTo = (channelId: string) => {
+	directMessagesStore.active = channelId;
 	props.router.push(`/app/channels/${channelId}`);
 	closeSwalInstance()
 }

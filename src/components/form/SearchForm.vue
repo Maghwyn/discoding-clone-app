@@ -4,9 +4,11 @@ import Swal from "sweetalert2";
 import { useRouter, type Router } from "vue-router";
 import {searchForChannelAndUser} from "@/api/search.req";
 import IconDiscord from '@/components/icons/IconDiscord.vue';
+import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
 const inputSearch = ref("")
 const channelsAndUsers = ref({})
+const directMessagesStore = useDirectMessagesStore()
 
 const props = defineProps<{
 	router: Router,
@@ -18,11 +20,15 @@ searchForChannelAndUser().then(
 	}
 )
 
+// Bullshit type fr @Mohamed
 const redirect = (item: any) => {
-	if (item["username"]) {}
-	else {
-		Swal.close()
-		props.router.push({path: '/app/channels/'+item["channelId"]})
+	if (item["username"] && item["conversationId"]) {
+		Swal.close();
+		directMessagesStore.active = item["conversationId"];
+		props.router.push(`/app/channels/${item["conversationId"]}`);
+	} else {
+		Swal.close();
+		props.router.push(`/app/${item["serverId"]}/${item["channelId"]}`)
 	}
 }
 

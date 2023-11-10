@@ -82,7 +82,7 @@ const filteredChannels = computed(() => {
 
 </template>
 
-<style>
+<style scoped>
 
 /* width */
 ::-webkit-scrollbar {

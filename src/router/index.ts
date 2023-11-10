@@ -44,7 +44,7 @@ const routes: Array<RouteRecordRaw> = [
 						component: () => import('../views/app/Relationship.vue'),
 					},
 					{
-						path: ':id',
+						path: ':channelId',
 						component: () => import('../views/app/Conversation.vue'),
 					}
 				]

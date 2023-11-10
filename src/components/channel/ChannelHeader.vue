@@ -2,7 +2,6 @@
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import IconGroup from '@/components/icons/IconGroup.vue';
 import IconHashtag from '@/components/icons/IconHashtag.vue';
-import SearchInput from '@/components/ui/SearchInput.vue';
 
 defineProps<{
 	userPicture?: string;
@@ -48,11 +47,7 @@ const actionSidebar = () => {
 				<IconGroup/>
 			</button>
 		</div>
-		<SearchInput
-			class="w-56"
-			:name="channelName"
-			:context="type"
-		/>
+		<slot name="search"/>
 	</div>
 </template>
 

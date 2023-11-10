@@ -1,5 +1,8 @@
 <script lang="ts" setup>
 import { ref, watch, computed, nextTick } from 'vue';
+import Swal from 'sweetalert2';
+import { useRoute } from 'vue-router';
+
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import IconDelete from '@/components/icons/IconDelete.vue';
 import IconEdit from '@/components/icons/IconEdit.vue';
@@ -10,18 +13,19 @@ import { formatDateHM, formatDateYMDHM } from '@/utils/date.helper';
 import { editMessage } from '@/api/messages.req';
 import { deletePrivateMessage } from '@/api/messages.req';
 import { useMessagesStore } from '@/stores/messages.store';
-import Swal from 'sweetalert2';
 
 const props = defineProps<{
 	messageId: string;
 	userPicture: string;
 	username: string;
 	content: string;
+	channelId: string;
 	createdAt: string;
 	isFollowup: boolean;
 	canEdit: boolean;
 	canDelete: boolean;
 	isBlocked: boolean;
+	isEdited: boolean;
 }>();
 
 const messagesStore = useMessagesStore();
@@ -79,7 +83,7 @@ const confirmEditMessage = async () => {
 	}
 
 	try {
-		await editMessage(props.messageId, content);
+		await editMessage(props.messageId, props.channelId, content);
 		return closeEditMode();
 	} catch(err) {
 		console.error(err);
@@ -99,7 +103,7 @@ const supressMessage = async () => {
 	}).then(async (result) => {
 		if (result.isConfirmed) {
 			try {
-				await deletePrivateMessage(props.messageId);
+				await deletePrivateMessage(props.messageId, props.channelId);
 			} catch(err) {
 				console.error(err);
 			}
@@ -130,11 +134,11 @@ const signalUser = () => {
 				<div v-if="canDelete" class="px-1.5 py-1 flex items-center justify-center">
 					<IconDelete @click="supressMessage" width="18" height="18" class="hover:text-red-500"/>
 				</div>
-				<div class="group px-1.5 py-1 flex items-center justify-center">
+				<div v-if="!canEdit" class="group px-1.5 py-1 flex items-center justify-center">
 					<IconBlock @click="blockUser" width="18" height="18" class="group-hover:text-red-500"/>
 					<div v-if="isBlocked" class="absolute h-3/4 w-[5px] rotate-45 rounded-sm border-[2px] border-[#2e3035] bg-red-500"></div>
 				</div>
-				<div class="px-1.5 py-1 flex items-center justify-center">
+				<div v-if="!canEdit" class="px-1.5 py-1 flex items-center justify-center">
 					<IconFlag @click="signalUser" width="18" height="18" class="hover:text-red-500"/>
 				</div>
 			</div>
@@ -162,7 +166,7 @@ const signalUser = () => {
 						<span class="text-[10px] text-[#949ba4] leading-none">{{ formatDateYMDHM(new Date(createdAt)) }}</span>
 					</div>
 					<div v-if="!isEditMode" class="text-[12px] text-white font-light">
-						{{ content }}
+						{{ content }} <span v-if="isEdited" class="text-[8px] text-[#949ba4]">{{ '(edited)' }}</span>
 					</div>
 					<div v-show="isEditMode" class="my-1 flex flex-col">
 						<textarea

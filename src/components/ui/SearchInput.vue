@@ -1,12 +1,16 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 defineProps<{
-	name: string;
-	context: 'server' | 'conversation'
+	placeholder: string;
 }>();
 
+const emits = defineEmits(['search']);
 const search = ref('');
+
+watch(search, value => {
+	emits('search', value);
+})
 </script>
 
 <template>
@@ -14,8 +18,9 @@ const search = ref('');
 		<label class="flex grow justify-center items-center relative">
 			<input
 				id="search-message-input"
+				v-model="search"
 				class="flex grow text-white text-xs items-center border-none outline-none rounded-md p-1/4 p-2 p-1/4 p-1/2 bg-background"
-				:placeholder="`Search a message in ${context === 'conversation' ? '@' : '#' }${name}`"
+				:placeholder="placeholder"
 			>
 			<div class="absolute right-[8px] text-[#949ba4]">
 				<svg v-if="search === ''" id="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon-active" viewBox="0 0 16 16">

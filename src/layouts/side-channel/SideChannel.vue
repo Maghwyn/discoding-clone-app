@@ -1,11 +1,29 @@
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue';
+import { useModal } from 'vue-final-modal'
+
 import SideChannelItem from '@/layouts/side-channel/SideChannelItem.vue';
 import VoiceStatusFooter from '@/components/ui/VoiceStatusFooter.vue';
 import IconHashtag from '@/components/icons/IconHashtag.vue';
 import IconAudio from '@/components/icons/IconAudio.vue';
 import IconWave from '@/components/icons/IconWave.vue';
-
+import IconPlus from "@/components/icons/IconPlus.vue";
+import NewChannelModal from "@/components/channel/NewChannelModal.vue";
+const { open, close } = useModal({
+  component: NewChannelModal,
+  attrs: {
+    defaultCheck: 'text',
+    onConfirm() {
+      close()
+    },
+    onClose(){
+      close()
+    }
+  },
+  slots: {
+    default: '',
+  },
+})
 // TODO: 
 const channelsList = ref([
 	{
@@ -51,8 +69,11 @@ watch(active, v => {
 <template>
 	<div class="flex flex-col w-[240px] min-w-[240px] overflow-hidden">
 		<div class="bottom-70 flex flex-col z-10">
-			<div class="px-4 flex h-12 items-center bg-midground search-header-shadow text-white text-[15px]">
+			<div class="px-4 flex h-12 items-center bg-midground search-header-shadow text-white text-[15px] justify-between">
 				Server name
+        <button @click="() => open()">
+          <icon-plus width="20" height="20" style="cursor: pointer" />
+        </button>
 			</div>
 		</div>
 		<div class="hover-scrollbar flex-1 overflow-y-auto py-2 px-2 bg-midground">

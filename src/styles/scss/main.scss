@@ -7,6 +7,16 @@ body {
 	background-color: rgb($color-foreground);
 }
 
+.vfm--overlay{
+	z-index: -1;
+	background-color: #000000c4 !important;
+}
+
+.bg-modal-chan{
+	background-color: #36393e;
+	color: white;
+}
+
 #app, #content {
 	width: 100%;
 	height: 100%;
@@ -25,4 +35,14 @@ body {
 
 html > body.swal2-height-auto { //! Nope, i refuse to use auto !important.
 	height: 100% !important;
+}
+
+html > body > .swal2-container > .swal2-modal {
+	width: 100%;
+}
+
+#VueSweetAlert2 {
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

@@ -5,6 +5,7 @@ export interface Channel {
     name: string;
     type: ChannelType;
     createdAt: Date;
+    notificationCount: number
 }
 
 export type ChannelType = 'text' | 'audio';

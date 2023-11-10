@@ -1,9 +1,29 @@
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import SideMenuItem from '@/layouts/side-menu/SideMenuItem.vue';
 import IconDiscovery from '@/components/icons/IconDiscovery.vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import IconPlus from '@/components/icons/IconPlus.vue';
+import { userServersStore } from "@/stores/userServers.store";
+import { storeToRefs } from "pinia";
+import { getUserServers } from "@/api/server.req";
+import { useModal } from "vue-final-modal";
+import NewServerModal from "@/components/form/newServerModal.vue";
+import { channelsStore} from "@/stores/channel.store";
+import { getServerChannels } from "@/api/channels.req";
+
+const { open, close } = useModal({
+  component: NewServerModal,
+  attrs: {
+    defaultCheck: 'text',
+    onConfirm() {
+      close()
+    },
+  },
+  slots: {
+    default: '',
+  },
+})
 
 // TODO: Retrieve all the directMessage not seen from the conversations store
 // TODO: The type will be DirectMessage
@@ -34,7 +54,16 @@ const directMessages = ref([
 // TODO: The field lastChannelId will need to be reactive, so we don't always go back to the default
 // TODO: We also need to add a field for the notificationCount
 // TODO: Wen also need to add a field updated for when someone send a message
-const servers = ref([
+const serversStore = userServersStore();
+const channelStore = channelsStore()
+const servs = ref()
+onMounted(async ()=>{
+  const servsAPI = await getUserServers()
+  serversStore.addUserServers(servsAPI.data)
+  const { servers } = storeToRefs(serversStore)
+  servs.value = servers.value
+})
+/*const servers = ref([
 	{
 		id: "1",
 		iconUrl: "https://picsum.photos/200?random=4",
@@ -115,11 +144,13 @@ const servers = ref([
 		notificationCount: 30,
 		updated: true,
 	},
-]);
+]);*/
 
 const active = ref("default");
-const setActive = (id: string) => {
+const setActive = async (id: string) => {
 	active.value = id;
+  const res = await getServerChannels(id)
+  channelStore.addChannels(res.data)
 }
 </script>
 
@@ -161,18 +192,18 @@ const setActive = (id: string) => {
 		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-1"/>
 
 		<SideMenuItem
-			v-for="(server, index) in servers"
+			v-for="(server, index) in servs"
 			:iconStyling="`mx-auto my-1 flex items-center justify-center`"
 			:notificationCount="server.notificationCount"
-			:goto="`/app/servers/${server.id}/${server.lastChannelId}`"
+			:goto="`/app/servers/${server._id}/${server.lastChannelId}`"
 			:image="`${server.iconUrl}`"
-			:identifier="server.id"
+			:identifier="server._id"
 			:tooltipContent="server.name"
-			:isActive="active === server.id"
+			:isActive="active === server._id"
 			:updated="server.updated"
 			:round="true"
 			:key="`direct_msg_${index}`"
-			@click="setActive(server.id)"
+			@click="setActive(server._id)"
 		/>
 
 		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-2"/>
@@ -203,6 +234,7 @@ const setActive = (id: string) => {
 			:isActive="false"
 			:updated="false"
 			:round="true"
+      @click="()=> {open()}"
 		>
 			<template v-slot:icon>
 				<div class="w-full h-full flex justify-center items-center rounded-[50%] text-green-500">

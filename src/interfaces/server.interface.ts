@@ -6,4 +6,7 @@ export interface Serv {
     name: string;
     isPublic: boolean;
     createdAt: Date;
+    updated: boolean;
+    lastChannelId: string;
+    notificationCount: number;
 }

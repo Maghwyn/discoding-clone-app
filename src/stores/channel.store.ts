@@ -10,8 +10,8 @@ export const channelsStore = defineStore('Channels',() => {
         channels.value.push(channel)
     }
 
-    function addChannels (channels: Array<Channel>){
-        channels.value = servs
+    function addChannels (channel: Array<Channel>){
+        channels.value = channel
     }
 
     function deleteChannels (channel : Channel) {

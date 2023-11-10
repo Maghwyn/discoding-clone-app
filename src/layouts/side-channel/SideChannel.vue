@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue';
+import { computed, onMounted, onUpdated, ref, watch } from 'vue';
 import { useModal } from 'vue-final-modal'
 
 import SideChannelItem from '@/layouts/side-channel/SideChannelItem.vue';
@@ -9,10 +9,20 @@ import IconAudio from '@/components/icons/IconAudio.vue';
 import IconWave from '@/components/icons/IconWave.vue';
 import IconPlus from "@/components/icons/IconPlus.vue";
 import NewChannelModal from "@/components/channel/NewChannelModal.vue";
+import { useRoute } from "vue-router";
+import { channelsStore } from "@/stores/channel.store";
+import { storeToRefs } from "pinia";
+
+const router = useRoute()
+const store = channelsStore()
+const channelId = ref(router.params.channelId);
+const serverId = ref(router.params.serverId);
+
 const { open, close } = useModal({
   component: NewChannelModal,
   attrs: {
     defaultCheck: 'text',
+    serverId: serverId,
     onConfirm() {
       close()
     },
@@ -24,7 +34,8 @@ const { open, close } = useModal({
     default: '',
   },
 })
-// TODO: 
+// TODO:
+const { channels } = storeToRefs(store)
 const channelsList = ref([
 	{
 		id: "2",
@@ -46,12 +57,11 @@ const channelsList = ref([
 	},
 ]);
 
-const textChannels = computed(() => channelsList.value.filter((c) => c.type === 'text'));
-const audioChannels = computed(() => channelsList.value.filter((c) => c.type === 'audio'));
+const textChannels = computed(() => channels.value.filter((c) => c.type === 'text' && c.isDefault != true));
+const audioChannels = computed(() => channels.value.filter((c) => c.type === 'audio' && c.isDefault != true));
 
-const serverId = ref("1");
 const defaultChannelName = ref("welcome");
-const defaultChannelId = ref("1");
+const defaultChannelId = ref(channelId);
 const defaultChannelNotificationCount = ref(0);
 
 const active = ref('default');
@@ -63,6 +73,9 @@ const setActive = (id: string) => {
 
 watch(active, v => {
 	console.log("after", v)
+})
+watch(channels,()=>{
+  defaultChannelName.value = channels.value.filter(chan => chan.isDefault == true)[0].name
 })
 </script>
 
@@ -105,10 +118,10 @@ watch(active, v => {
 			<ul class="flex flex-col gap-0.5">
 				<SideChannelItem
 					v-for="(channel, index) in textChannels"
-					:goto="`/app/servers/${serverId}/${channel.id}`"
+					:goto="`/app/servers/${serverId}/${channel._id}`"
 					:name="channel.name"
-					:isActive="active === channel.id"
-					@click="setActive(channel.id)"
+					:isActive="active === channel._id"
+					@click="setActive(channel._id)"
 				>
 					<template v-slot:icon>
 						<IconHashtag v-if="channel.type === 'text'" width="20" height="20"/>
@@ -129,10 +142,10 @@ watch(active, v => {
 			<ul class="flex flex-col gap-0.5">
 				<SideChannelItem
 					v-for="(channel, index) in audioChannels"
-					:goto="`/app/servers/${serverId}/${channel.id}`"
+					:goto="`/app/servers/${serverId}/${channel._id}`"
 					:name="channel.name"
-					:isActive="active === channel.id"
-					@click="setActive(channel.id)"
+					:isActive="active === channel._id"
+					@click="setActive(channel._id)"
 				>
 					<template v-slot:icon>
 						<IconHashtag v-if="channel.type === 'text'" width="20" height="20"/>

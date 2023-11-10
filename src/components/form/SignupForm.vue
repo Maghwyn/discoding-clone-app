@@ -34,12 +34,12 @@ const trySignup = async () => {
 
 <template>
 	<div class="position-auth">
-		<form class="container-form" @submit.prevent="trySignup">
+		<form class="container-form w-[30rem] !flex" @submit.prevent="trySignup">
 			<div class="centering-wrapper">
 				<div class="section1 text-center">
 					<div class="primary-header">Welcome aboard !</div>
 					<div class="secondary-header">We're so excited to see you !</div>
-					<div class="input-position">
+					<div class="input-position w-full">
 						<div class="form-group">
 							<label for="signupPseudo" class="input-placeholder" id="pseudo-txt">Pseudo<span class="error-message" id="pseudo-error"></span></label>
 							<input type="pseudo" v-model="pseudoSignup" required="true" name="signupPseudo" class="form-style" id="signupPseudo" autocomplete="off" style="margin-bottom: 20px;">

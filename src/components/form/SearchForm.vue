@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import {computed, ref} from "vue";
 import Swal from "sweetalert2";
-import { useRouter } from "vue-router";
+import { useRouter, type Router } from "vue-router";
 import {searchForChannelAndUser} from "@/api/search.req";
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 
-const router = useRouter();
 const inputSearch = ref("")
 const channelsAndUsers = ref({})
+
+const props = defineProps<{
+	router: Router,
+}>()
 
 searchForChannelAndUser().then(
 	(res) => {
@@ -19,7 +22,7 @@ const redirect = (item: any) => {
 	if (item["username"]) {}
 	else {
 		Swal.close()
-		router.push({path: '/app/channels/'+item["channelId"]})
+		props.router.push({path: '/app/channels/'+item["channelId"]})
 	}
 }
 

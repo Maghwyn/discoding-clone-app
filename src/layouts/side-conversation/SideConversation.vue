@@ -44,7 +44,7 @@ const openSearchModale = () => {
 		showConfirmButton: false,
 		background: 'transparent',
 		willOpen() {
-			const vnode = h(SearchForm);
+			const vnode = h(SearchForm, { router });
 			const el = document.createElement("div");
 			render(vnode, el);
 			document.getElementById('VueSweetAlert2').appendChild(el);

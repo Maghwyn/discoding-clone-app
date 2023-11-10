@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import SideConversation from '@/layouts/side-conversation/SideConversation.vue';
@@ -11,22 +11,41 @@ import { retrieveChannelMessages } from '@/api/messages.req';
 import { useMessagesStore } from '@/stores/messages.store';
 import { MessageContext } from '@/api/messages.req.type';
 import { useDirectMessagesStore } from '@/stores/direct-messages.store';
+import { useMessagesSocket } from '@/composables/useSocketMessage';
 
-const route = useRoute();
+const msgSocket = useMessagesSocket();
+
 const directMessagesStore = useDirectMessagesStore();
 const messageStore = useMessagesStore();
-const channelId = route.params.id as string;
-const directMessage = computed(() => directMessagesStore.findById(channelId));
+
+const route = useRoute();
+const activeChannel = computed(() => directMessagesStore.active);
+const directMessage = computed(() => directMessagesStore.findById(activeChannel.value));
 const messages = computed(() => messageStore.messages);
 const isBlocked = computed(() => messages.value.some((m) => m.isBlocked));
 
-onMounted(async () => {
+const fetchMessages = async () => {
+	if (activeChannel.value === 'default') return;
+	
 	try {
-		const res = await retrieveChannelMessages(channelId, MessageContext.CONVERSATION);
+		const res = await retrieveChannelMessages(activeChannel.value, MessageContext.CONVERSATION);
+		messageStore.removeAllUnreadsFrom(activeChannel.value);
 		messageStore.messages = res.data || [];
 	} catch(err) {
 		console.error(err);
 	}
+}
+
+onMounted(async () => {
+	const channelId = route.params.channelId as string;
+	directMessagesStore.active = channelId;
+	msgSocket.emit('connected-to', channelId);
+	fetchMessages();
+})
+
+watch(activeChannel, value => {
+	msgSocket.emit('connected-to', value);
+	fetchMessages();
 })
 
 const isFollowup = (index: number) => {
@@ -59,11 +78,13 @@ const isFollowup = (index: number) => {
 					:user-picture="message.userPicture"
 					:username="message.username"
 					:content="message.content"
+					:channel-id="message.channelId"
 					:can-edit="message.isOwner"
 					:can-delete="message.isOwner"
 					:is-followup="isFollowup(index)"
 					:created-at="message.createdAt"
 					:is-blocked="message.isBlocked"
+					:is-edited="message.isEdited"
 					:key="`msg_channel_${index}`"
 				/>
 			</div>

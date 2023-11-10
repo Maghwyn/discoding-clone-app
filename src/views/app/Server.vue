@@ -17,6 +17,7 @@ const messages = ref([
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -25,6 +26,7 @@ const messages = ref([
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -33,6 +35,7 @@ const messages = ref([
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -41,6 +44,7 @@ const messages = ref([
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -49,6 +53,7 @@ const messages = ref([
 		userId: "99",
 		userPicture: "https://picsum.photos/200?random=2",
 		username: "Ronald",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -57,6 +62,7 @@ const messages = ref([
 		userId: "99",
 		userPicture: "https://picsum.photos/200?random=2",
 		username: "Ronald",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -65,6 +71,7 @@ const messages = ref([
 		userId: "100",
 		userPicture: "https://picsum.photos/200?random=100",
 		username: "Maghwyn",
+		channelId: '1',
 		content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ac erat nec ipsum dictum hendrerit. Nulla facilisi. Cras sed leo vel dui varius eleifend",
 		createdAt: new Date().toISOString(),
 	},
@@ -107,6 +114,7 @@ const actionSidebar = (b: boolean) => {
 							v-for="(message, index) in messages"
 							:message-id="message.id"
 							:user-picture="message.userPicture"
+							:channel-id="message.channelId"
 							:username="message.username"
 							:content="message.content"
 							:can-edit="userId === message.userId"
@@ -114,6 +122,7 @@ const actionSidebar = (b: boolean) => {
 							:is-followup="isFollowup(index)"
 							:created-at="message.createdAt"
 							:is-blocked="false"
+							:is-edited="false"
 							:key="`msg_channel_${index}`"
 						/>
 					</div>

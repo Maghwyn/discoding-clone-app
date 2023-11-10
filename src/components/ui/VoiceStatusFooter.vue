@@ -5,6 +5,11 @@ import IconHeadphones from '@/components/icons/IconHeadphones.vue';
 import IconGear from '@/components/icons/IconGear.vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
 import { useUsersStore } from '@/stores/users.store';
+import IconDisconnect from "@/components/icons/IconDisconnect.vue";
+import { logoutUser } from "@/api/auth.req";
+import Popper from "@/components/ui/Popper.vue";
+import { test } from "vitest";
+import router from "@/router";
 
 const userStore = useUsersStore();
 const user = computed(() => userStore.user);
@@ -23,6 +28,11 @@ const setMute = (b: boolean) => {
 const setDeafen = (b: boolean) => {
 	deafen.value = b;
 	muted.value = b;
+}
+
+async function logout(){
+  await logoutUser()
+  window.location.reload()
 }
 </script>
 
@@ -62,9 +72,9 @@ const setDeafen = (b: boolean) => {
 				<IconHeadphones width="20" height="20"/>
 				<div v-if="deafen" class="absolute h-3/4 w-[5px] rotate-45 rounded-sm border-[2px] border-semibackground bg-red-500 group-hover:border-[#3a3c42]"></div>
 			</button>
-			<button class="group relative flex h-8 w-8 items-center justify-center rounded-md hover:bg-[#4E505899] text-[#949ba4]">
-				<IconGear width="20" height="20"/>
-			</button>
+        <button class="group relative flex h-8 w-8 items-center justify-center rounded-md hover:bg-[#4E505899] text-[#949ba4]" @click="logout()">
+          <IconDisconnect height="20" width="20"/>
+        </button>
 		</div>
 	</div>
 </template>

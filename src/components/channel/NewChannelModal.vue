@@ -6,15 +6,15 @@ import IconRadioFull from "@/components/icons/IconRadioFull.vue";
 import IconAudio from "@/components/icons/IconAudio.vue";
 import IconHashtag from "@/components/icons/IconHashtag.vue";
 import { addNewChannel } from '@/api/channels.req'
-
+import { channelsStore } from "@/stores/channel.store";
 import { ref } from "vue";
 
-const props = defineProps(['defaultCheck'])
+const props = defineProps(['defaultCheck','serverId'])
 const emit = defineEmits<{
   (e: 'confirm'): void,
 }>()
 const checked = ref(props.defaultCheck)
-
+const store = channelsStore()
 function onClose() {
   checked.value = 'text'
   channelName.value = ''
@@ -26,11 +26,12 @@ async function createChannel(){
   const res = await addNewChannel({
     name: channelName.value,
     type: checked.value,
-    serverId :'654b5b71b908d63e703bf099'
+    serverId : props.serverId
   })
+  store.addChannel(res.data)
   emit('confirm');
 }
-function radioGroupSelect(selected) {
+function radioGroupSelect(selected : string) {
   const text = document.getElementById('text')
   const vocal = document.getElementById('vocal')
   if ( selected == 'text' ) {
@@ -47,7 +48,7 @@ function radioGroupSelect(selected) {
       vocal.ariaChecked = 'true'
       text.ariaChecked = 'false'
       text.classList.remove('selected')
-      checked.value = 'vocal'
+      checked.value = 'audio'
     }
   }
 
@@ -83,7 +84,7 @@ function radioGroupSelect(selected) {
               <IconRadioEmpty v-if="checked != 'text'"/>
             </div>
           </div>
-          <div role="radio" aria-checked="false" class="radio" id="vocal" @click="radioGroupSelect('vocal')">
+          <div role="radio" aria-checked="false" class="radio" id="vocal" @click="radioGroupSelect('audio')">
             <div style="width: 10%">
               <icon-audio width="20px" height="20px" style="margin-left: 10px"/>
             </div>
@@ -92,14 +93,14 @@ function radioGroupSelect(selected) {
               <p>Rejoins tes amis en vocal, en vidéo et avec le partage d'écran</p>
             </div>
             <div style="width: 10%">
-              <IconRadioFull v-if="checked == 'vocal'"/>
-              <IconRadioEmpty v-if="checked != 'vocal'"/>
+              <IconRadioFull v-if="checked == 'audio'"/>
+              <IconRadioEmpty v-if="checked != 'audio'"/>
             </div>
           </div>
           <div style="width: 100%; padding: 7px; height: 40%">
             <h4>Nom du salon</h4>
             <div class="input-salon">
-              <IconAudio v-if="checked == 'vocal'" width="15px" height="15px"/>
+              <IconAudio v-if="checked == 'audio'" width="15px" height="15px"/>
               <IconHashtag v-if="checked == 'text'" width="15px" height="15px"/>
               <input type="text" placeholder="nouveau-salon" v-model="channelName">
             </div>

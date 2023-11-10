@@ -21,3 +21,7 @@ export const retrieveChannelMessages = (channelId: string, context: MessageConte
 export const retrieveUnreadsMessage = () => {
 	return http.get<Array<Message>>('/messages/private/unreads');
 }
+
+export const searchMessages = (channelId: string, query: string) => {
+	return http.get<Array<Message>>(`/messages/search/${channelId}?q=${query}`);
+}

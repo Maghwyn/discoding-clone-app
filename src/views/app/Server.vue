@@ -105,7 +105,14 @@ const actionSidebar = (b: boolean) => {
 			:channel-name="currentChannelName"
 			type="server"
 			@sidebar="actionSidebar(!isSidebarOpen)"
-		/>
+		>
+			<template v-slot:search>
+				<SearchInput
+					class="w-56"
+					:placeholder="`Search a message in #${currentChannelName}`"
+				/>
+			</template>
+		</ChannelHeader>
 		<div class="relative flex flex-1 min-h-0 min-w-0 z-0">
 			<div class="flex grow flex-col flex-1 relative">
 				<div class="relative flex flex-1 flex-col flex-col-reverse min-h-0 min-w-0 z-0 overflow-scroll">

@@ -16,12 +16,10 @@ searchForChannelAndUser().then(
 )
 
 const redirect = (item: any) => {
-	if (item["username"]) {
-		console.log(item)
-	} else {
+	if (item["username"]) {}
+	else {
 		Swal.close()
 		router.push({path: '/app/channels/'+item["channelId"]})
-		console.log(item)
 	}
 }
 

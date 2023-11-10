@@ -36,7 +36,6 @@ export const useMessagesStore = defineStore('messages', {
 	},
 	actions: {
 		removeAllUnreadsFrom(this: MessagesStore, channelId: string) {
-			console.log("heys")
 			this.unreads = this.unreads.filter((c) => c.channelId !== channelId);
 		},
 		reset(this: MessagesStore, keys?: Array<KeysRequired<MessagesStore>>) {

@@ -12,12 +12,9 @@ export const handleSocketMessagesEvents = (socket: Socket) => {
 	const activeChannelId = computed(() => directMessage.active);
 
 	socket.on('message-received', (message: Message) => {
-		console.log(activeChannelId.value === message.channelId)
 		if (activeChannelId.value === message.channelId) {
-			console.log("message-pushed")
 			messageStore.messages.push(message);
 		} else if (!message.isOwner) {
-			console.log("message-unread")
 			messageStore.unreads.push(message);
 		}
 	})

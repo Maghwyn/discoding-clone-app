@@ -36,20 +36,20 @@ const openModal = () => {
 }
 
 // TODO: This should be related to the relationship / pending / blocked or other stuff with notification
-const relationshipNotificationCount = ref(3);
+const relationshipNotificationCount = ref(0);
 
 const openSearchModale = () => {
-  Swal.fire({
-    html: '<div id="VueSweetAlert2"></div>',
-    showConfirmButton: false,
-    showCloseButton: true,
-    willOpen() {
-      const vnode = h(SearchForm);
-      const el = document.createElement("div");
-      render(vnode, el);
-      document.getElementById('VueSweetAlert2').appendChild(el);
-    },
-  })
+	Swal.fire({
+		html: '<div id="VueSweetAlert2"></div>',
+		showConfirmButton: false,
+		background: 'transparent',
+		willOpen() {
+			const vnode = h(SearchForm);
+			const el = document.createElement("div");
+			render(vnode, el);
+			document.getElementById('VueSweetAlert2').appendChild(el);
+		},
+	})
 }
 </script>
 

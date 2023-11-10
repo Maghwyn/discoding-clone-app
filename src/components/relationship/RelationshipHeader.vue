@@ -57,9 +57,9 @@ const openModal = () => {
 				@click="changeTab('blocked')"
 			>
 				<span>Blocked</span>
-				<div class="flex justify-center items-center rounded-[50%] text-[11px] font-bold leading-4 uppercase tracking-wide h-4 w-4 min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] text-center flex-auto text-white bg-red-500">
-					{{ 3 }}
-				</div>
+				<!-- <div class="flex justify-center items-center rounded-[50%] text-[11px] font-bold leading-4 uppercase tracking-wide h-4 w-4 min-w-[16px] max-w-[16px] min-h-[16px] max-h-[16px] text-center flex-auto text-white bg-red-500">
+					{{ 0 }}
+				</div> -->
 			</button>
 			<button class="px-2 bg-[#248046] text-white text-[14px] rounded-sm" @click="openModal">Add Friend</button>
 		</div>

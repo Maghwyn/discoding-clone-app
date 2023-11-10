@@ -17,6 +17,5 @@ export const deleteServer = (serverId : string) => {
 }
 
 export const updateServer = (server : ServerUpdate) => {
-    console.log(server)
     return http.put('/servers', server)
 }

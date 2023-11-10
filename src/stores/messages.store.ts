@@ -8,6 +8,7 @@ const messagesStoreDefaultState = (): MessagesStore => ({
 	lastEditId: null,
 	messages: [],
 	unreads: [],
+	searchResult: [],
 });
 
 export const useMessagesStore = defineStore('messages', {

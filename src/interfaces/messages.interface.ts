@@ -4,6 +4,7 @@ export interface MessagesStore {
 	lastEditId: string;
 	messages: Array<Message>
 	unreads: Array<Message>;
+	searchResult: Array<Message>;
 }
 
 export type UnreadMessageGroup = {

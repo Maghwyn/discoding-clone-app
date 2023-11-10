@@ -104,7 +104,7 @@ const closeSwalInstance = () => {
 													class="flex items-center justify-center h-6 min-w-[32px] bg-[#7289d9] hover:bg-[#677bc4] text-white text-[12px] px-2 rounded"
 													@click="jumpTo(relation.channelId)"
 												>
-													Jump
+													Jump to it
 												</button>
 											</div>
 										</div>

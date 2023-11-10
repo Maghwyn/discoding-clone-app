@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUpdated, ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useModal } from 'vue-final-modal'
 
 import SideChannelItem from '@/layouts/side-channel/SideChannelItem.vue';
@@ -17,7 +17,7 @@ const router = useRoute()
 const store = channelsStore()
 const channelId = ref(router.params.channelId);
 const serverId = ref(router.params.serverId);
-
+const props = defineProps(['serverName'])
 const { open, close } = useModal({
   component: NewChannelModal,
   attrs: {
@@ -36,26 +36,6 @@ const { open, close } = useModal({
 })
 // TODO:
 const { channels } = storeToRefs(store)
-const channelsList = ref([
-	{
-		id: "2",
-		name: "gaming",
-		notificationCount: 0,
-		type: 'text'
-	},
-	{
-		id: "3",
-		name: "shit-posting",
-		notificationCount: 5,
-		type: 'text'
-	},
-	{
-		id: "4",
-		name: "general",
-		notificationCount: 5,
-		type: 'audio'
-	},
-]);
 
 const textChannels = computed(() => channels.value.filter((c) => c.type === 'text' && c.isDefault != true));
 const audioChannels = computed(() => channels.value.filter((c) => c.type === 'audio' && c.isDefault != true));
@@ -78,7 +58,7 @@ watch(channels,()=>{
 	<div class="flex flex-col w-[240px] min-w-[240px] overflow-hidden">
 		<div class="bottom-70 flex flex-col z-10">
 			<div class="px-4 flex h-12 items-center bg-midground search-header-shadow text-white text-[15px] justify-between">
-				Server name
+          {{channels[0].serverName}}
         <button @click="() => open()">
           <icon-plus width="20" height="20" style="cursor: pointer" />
         </button>

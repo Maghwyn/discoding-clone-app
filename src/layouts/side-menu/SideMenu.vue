@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, computed, ref } from 'vue';
 import SideMenuItem from '@/layouts/side-menu/SideMenuItem.vue';
 import IconDiscovery from '@/components/icons/IconDiscovery.vue';
 import IconDiscord from '@/components/icons/IconDiscord.vue';
@@ -11,6 +11,8 @@ import { useModal } from "vue-final-modal";
 import NewServerModal from "@/components/form/newServerModal.vue";
 import { channelsStore} from "@/stores/channel.store";
 import { getServerChannels } from "@/api/channels.req";
+import { useMessagesStore } from '@/stores/messages.store';
+import { useDirectMessagesStore } from '@/stores/direct-messages.store';
 
 const { open, close } = useModal({
   component: NewServerModal,
@@ -25,29 +27,15 @@ const { open, close } = useModal({
   },
 })
 
-// TODO: Retrieve all the directMessage not seen from the conversations store
-// TODO: The type will be DirectMessage
-// TODO: The field id is the conversation ID, the userId is not returned but only the necessary data
-const directMessages = ref([
-	{
-		id: "X1",
-		userPicture: "https://picsum.photos/200?random=1",
-		username: "Bobyis",
-		notificationCount: 2,
-	},
-	{
-		id: "X2",
-		userPicture: "https://picsum.photos/200?random=2",
-		username: "Ronald",
-		notificationCount: 5,
-	},
-	{
-		id: "X3",
-		userPicture: "https://picsum.photos/200?random=3",
-		username: "Hugo",
-		notificationCount: 1,
-	},
-]);
+
+const directMessageStore = useDirectMessagesStore();
+const messagesStore = useMessagesStore();
+const unreads = computed(() => {
+	const a = messagesStore.groupUnreadsByUsers
+	console.log(a)
+	return a;
+});
+// const notifcationCount = computed(() => messagesStore.groupUnreadsNotification);
 
 // TODO: Retrieve all the servers the users is in from the server store
 // TODO: The type will be Server, and we need the lastChannelId -> Default is defaultChannelId
@@ -152,6 +140,11 @@ const setActive = async (id: string) => {
   const res = await getServerChannels(id)
   channelStore.addChannels(res.data)
 }
+
+const setDirectMessageActive = (id: string) => {
+	directMessageStore.active = id;
+	active.value = id;
+}
 </script>
 
 <template>
@@ -175,19 +168,25 @@ const setActive = async (id: string) => {
 		</SideMenuItem>
 
 		<SideMenuItem
-			v-for="(channel, index) in directMessages"
-			:iconStyling="`mx-auto my-1 flex items-center justify-center`"
-			:notificationCount="channel.notificationCount"
-			:goto="`/app/channels/${channel.id}`"
-			:image="`${channel.userPicture}`"
-			:identifier="channel.id"
-			:tooltipContent="channel.username"
-			:isActive="active === channel.id"
+			v-for="(channel, index) in unreads"
+			:icon-styling="`mx-auto my-1 flex items-center justify-center`"
+			:notification-count="channel.notificationCount"
+			:goto="`/app/channels/${channel.channelId}`"
+			:image="channel.userPicture"
+			:identifier="channel.channelId"
+			:tooltip-content="channel.username"
+			:is-active="active === channel.channelId"
 			:updated="true"
 			:round="true"
-			:key="`direct_msg_${index}`"
-			@click="setActive(channel.id)"
-		/>
+			:key="`direct_msg_${index}_${channel.notificationCount}`"
+			@click="setDirectMessageActive(channel.channelId)"
+		>
+			<template v-slot:icon>
+				<div class="flex items-center justify-center w-full h-full rounded-[50%] bg-pink-400 text-white">
+					<IconDiscord width="32" height="32"/>
+				</div>
+			</template>
+		</SideMenuItem>
 
 		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-1"/>
 
@@ -204,6 +203,7 @@ const setActive = async (id: string) => {
 			:round="true"
 			:key="`direct_msg_${index}`"
 			@click="setActive(server._id)"
+
 		/>
 
 		<div class="bg-white bg-opacity-10 mx-auto h-0.5 w-8 my-2"/>

@@ -28,15 +28,14 @@ const trySignin = async () => {
 }
 </script>
 
-
 <template>
 	<div class="position-auth">
-		<form class="container-form" @submit.prevent="trySignin">
+		<form class="container-form w-[30rem] !flex" @submit.prevent="trySignin">
 			<div class="centering-wrapper">
 				<div class="section1 text-center">
 					<div class="primary-header">Welcome back !</div>
 					<div class="secondary-header">We're so excited to see you again!</div>
-					<div class="input-position">
+					<div class="input-position w-full">
 						<div class="form-group">
 							<label for="logemail" class="input-placeholder" id="email-txt">Email<span class="error-message" id="email-error"></span></label>
 							<input type="email" v-model="emailSignin" required="true" name="logemail" class="form-style" id="logemail" autocomplete="off" style="margin-bottom: 20px;">

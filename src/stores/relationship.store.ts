@@ -14,13 +14,13 @@ const relationshipStoreDefaultState = (): RelationshipStore => ({
 export const useRelationshipStore = defineStore('relationships', {
 	state: (): RelationshipStore => relationshipStoreDefaultState(),
 	actions: {
-		filteredFriends(this: RelationshipStore) {
-			if (this.friendUsernameFilter === "") return this.friends;
-			return this.friends.filter((c) => c.username.includes(this.friendUsernameFilter));
+		filteredFriends(this: RelationshipStore, username?: string) {
+			if (this.friendUsernameFilter === "" && username === "") return this.friends;
+			return this.friends.filter((c) => c.username.includes(username || this.friendUsernameFilter));
 		},
-		filteredBlocked(this: RelationshipStore) {
-			if (this.blockedUsernameFilter === "") return this.blocked;
-			return this.blocked.filter((c) => c.username.includes(this.blockedUsernameFilter));
+		filteredBlocked(this: RelationshipStore, username?: string) {
+			if (this.blockedUsernameFilter === "" && username === "") return this.blocked;
+			return this.blocked.filter((c) => c.username.includes(username || this.blockedUsernameFilter));
 		},
 		reset(this: RelationshipStore, keys?: Array<KeysRequired<RelationshipStore>>) {
 			Object.assign(

@@ -22,6 +22,9 @@ export const useDirectMessagesStore = defineStore('conversations', {
 				this.channels.unshift(directMessage);
 			}
 		},
+		retrieveChannelsId(this: DirectMessagesStore) {
+			return this.channels.map((c) => c.id);
+		},
 		reset(this: DirectMessagesStore, keys?: Array<KeysRequired<DirectMessagesStore>>) {
 			Object.assign(
 				this,

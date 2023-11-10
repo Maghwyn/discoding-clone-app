@@ -2,6 +2,7 @@
 import Popper from '@/components/ui/Popper.vue';
 import NotificationBadge from '@/components/ui/NotificationBadge.vue';
 import { RouterLink } from 'vue-router';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
 	notificationCount: number;
@@ -15,7 +16,12 @@ const props = defineProps<{
 	identifier: string;
 }>();
 
+const test = ref(props.image)
 
+watch(test, val => {
+	console.log("string", val === 'undefined')
+	console.log("undefined", val === undefined)
+}, { immediate: true })
 
 const roundClass = props.round 
 	? "rounded-[50%] group-hover:rounded-[15px]"
